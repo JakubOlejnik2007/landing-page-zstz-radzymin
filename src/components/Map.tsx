@@ -1,8 +1,17 @@
-
 import { useEffect, useMemo, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Html, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
+
+const MAP_BACKGROUND = "#071426";
+
+const MIN_LON = -25;
+const MAX_LON = 45;
+const MIN_LAT = 34;
+const MAX_LAT = 72;
+
+const MAP_SCALE_X = 0.52;
+const MAP_SCALE_Y = 0.82;
 
 type Position = [number, number];
 
@@ -86,21 +95,108 @@ const markers: Marker[] = [
         coordinates: [14.5141, 35.8992],
         description: "Projekt Erasmus+ na Malcie",
         color: "#34D399",
+    }, {
+        name: "Trapani",
+        country: "Włochy",
+        coordinates: [12.5372, 38.0176],
+        description: "Kurs Yoga and Meditation for Educators w ramach akredytacji SCH",
+        color: "#A78BFA",
     },
+    {
+        name: "Rodos",
+        country: "Grecja",
+        coordinates: [28.2278, 36.4341],
+        description: "Szkolenie Climate Change Education dla nauczycieli",
+        color: "#34D399",
+    },
+    {
+        name: "Florencja",
+        country: "Włochy",
+        coordinates: [11.2558, 43.7696],
+        description: "Kurs językowy dla nauczycieli w ramach akredytacji SCH",
+        color: "#F59E0B",
+    },
+    {
+        name: "Walencja",
+        country: "Hiszpania",
+        coordinates: [-0.3763, 39.4699],
+        description: "Szkolenie dotyczące wykorzystania sztucznej inteligencji w edukacji",
+        color: "#38BDF8",
+    },
+    {
+        name: "Lizbona",
+        country: "Portugalia",
+        coordinates: [-9.1393, 38.7223],
+        description: "Szkolenie Leadership and Conflict Management dla kadry kierowniczej",
+        color: "#F472B6",
+    },
+    {
+        name: "Padwa",
+        country: "Włochy",
+        coordinates: [11.8768, 45.4064],
+        description: "Kurs Italian cooking and UNESCO Mediterranean diet dla nauczycieli",
+        color: "#FACC15",
+    },
+    {
+        name: "Dublin",
+        country: "Irlandia",
+        coordinates: [-6.2603, 53.3498],
+        description: "Wizyta studyjna Erasmus+ VET – poznawanie irlandzkiego systemu kształcenia zawodowego i poszukiwanie partnerów do współpracy",
+        color: "#38BDF8",
+    }
 ];
 
-const MIN_LON = -25;
-const MAX_LON = 45;
-const MIN_LAT = 34;
-const MAX_LAT = 72;
+
 
 function project(lon: number, lat: number): [number, number] {
     return [
-        (lon - 15) * 0.62,
-        (lat - 54),
+        (lon - 10) * MAP_SCALE_X,
+        (lat - 54) * MAP_SCALE_Y,
     ];
 }
 
+function getVisiblePolygons(feature: Feature): Position[][][] {
+    const polygons =
+        feature.geometry.type === "Polygon"
+            ? [feature.geometry.coordinates]
+            : feature.geometry.coordinates;
+
+    const getArea = (polygon: Position[][]) => {
+        const ring = polygon[0];
+        let area = 0;
+
+        for (let i = 0; i < ring.length; i++) {
+            const current = ring[i];
+            const next = ring[(i + 1) % ring.length];
+
+            area += current[0] * next[1] - next[0] * current[1];
+        }
+
+        return Math.abs(area / 2);
+    };
+
+    const getCenter = (polygon: Position[][]) => {
+        const ring = polygon[0];
+
+        return {
+            lon: ring.reduce((sum, point) => sum + point[0], 0) / ring.length,
+            lat: ring.reduce((sum, point) => sum + point[1], 0) / ring.length,
+        };
+    };
+
+    const europeanPolygons = polygons.filter(polygon => {
+        const { lon, lat } = getCenter(polygon);
+
+        return (
+            lon >= MIN_LON &&
+            lon <= MAX_LON &&
+            lat >= MIN_LAT &&
+            lat <= MAX_LAT
+        );
+    });
+
+    return europeanPolygons;
+}
 function createArc(
     start: THREE.Vector3,
     end: THREE.Vector3,
@@ -265,15 +361,12 @@ function CountryMap({
 
             if (
                 continent !== "Europe" &&
-                name !== "Turkey"
+                name !== "Turkey" || name === "Russia"
             ) {
                 return;
             }
 
-            const polygons =
-                feature.geometry.type === "Polygon"
-                    ? [feature.geometry.coordinates]
-                    : feature.geometry.coordinates;
+            const polygons = getVisiblePolygons(feature);
 
             polygons.forEach((polygon: Position[][]) => {
                 const shape = createShape(polygon, 0.985);
@@ -281,7 +374,7 @@ function CountryMap({
                 if (!shape) return;
 
                 const geometry = new THREE.ExtrudeGeometry(shape, {
-                    depth: 0.55,
+                    depth: 0.25,
                     bevelEnabled: true,
                     bevelSegments: 1,
                     steps: 1,
@@ -451,7 +544,7 @@ function Scene({
 
     return (
         <>
-            <color attach="background" args={["#071426"]} />
+            <color attach="background" args={[MAP_BACKGROUND]} />
 
             <ambientLight intensity={1.2} />
 
@@ -466,16 +559,7 @@ function Scene({
                 color="#38BDF8"
             />
 
-            <mesh
-                rotation={[-Math.PI / 2, 0, 0]}
-                position={[0, -0.45, 0]}
-            >
-                <planeGeometry args={[200, 200]} />
-                <meshStandardMaterial
-                    color="#071426"
-                    roughness={1}
-                />
-            </mesh>{
+            {
 
                 markers.filter(location => !location.primary).map(location => {
                     const end = getMarkerPosition(
@@ -504,7 +588,7 @@ function Scene({
                 enableDamping
                 dampingFactor={0.06}
                 minDistance={16}
-                maxDistance={65}
+                maxDistance={42}
                 maxPolarAngle={Math.PI / 2.05}
                 minPolarAngle={0.35}
                 target={[0, 0, 0]}
@@ -541,20 +625,25 @@ export default function EuropeMap3D() {
     return (
         <div style={{
             width: "100%",
-            height: "700px",
+            flex: 1,
+            minHeight: 0,
             position: "relative",
             overflow: "hidden",
-            borderRadius: "16px",
-            background: "#071426",
+            display: "flex",
+            flexDirection: "column"
         }}>
             <Canvas
                 camera={{
-                    position: [0, 25, 30],
-                    fov: 42,
+                    position: [0, 15, 30],
+                    fov: 35,
                     near: 0.1,
-                    far: 300,
+                    far: 250,
                 }}
                 dpr={[1, 2]}
+                style={{
+
+                    flex: 1,
+                }}
             >
                 <Scene
                     data={data}
