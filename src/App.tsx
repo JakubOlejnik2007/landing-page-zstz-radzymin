@@ -11,7 +11,21 @@ function App() {
 
   return (
     <>
-      <EuropeMap3D />
+      <div className="page-section"></div>
+      <div className="page-section">
+        <h2>Uczniowie ZSTZ w całej Europie!</h2>
+        <EuropeMap3D />
+      </div>
+      <div className="page-section"></div>
+      <div className="page-section"></div>
+      <div className="page-section"></div>
+      <div className="page-section"></div>
+      <div className="page-section"></div>
+      <div className="page-section"></div>
+      <div className="page-section"></div>
+      <div className="page-section"></div>
+
+
     </>
   )
 }
