@@ -46,9 +46,20 @@ const COLORS = {
 
 const SHADING = {
     // o ile (0..1) zmniejszyć jasność HSL boków/bevela względem koloru kraju
-    sideLightnessDrop: 0.18,
+    sideLightnessDrop: 0.25,
+    // mnożnik nasycenia boków (1 = bez zmian, 0 = szarość) – daje oliwkowy ton
+    sideSaturationScale: 0.4,
+    // przesunięcie odcienia boków (0..1 = pełny obrót koła barw; ujemne = w stronę żółci)
+    sideHueShift: -0.03,
     // przesunięcie jasności górnej ścianki (0 = dokładnie kolor kraju)
     topLightnessShift: 0,
+} as const;
+
+const CAMERA = {
+    fov: 25,
+    position: [0, 21, 42.6] as [number, number, number],
+    minDistance: 23,
+    maxDistance: 60,
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -324,8 +335,8 @@ function buildCountriesGeometry(
             THREE.SRGBColorSpace
         );
         side.setHSL(
-            hsl.h,
-            hsl.s,
+            (hsl.h + SHADING.sideHueShift + 1) % 1,
+            clamp01(hsl.s * SHADING.sideSaturationScale),
             clamp01(hsl.l - SHADING.sideLightnessDrop),
             THREE.SRGBColorSpace
         );
@@ -536,8 +547,8 @@ const Scene = memo(function Scene({
             <OrbitControls
                 enableDamping
                 dampingFactor={0.06}
-                minDistance={16}
-                maxDistance={42}
+                minDistance={CAMERA.minDistance}
+                maxDistance={CAMERA.maxDistance}
                 maxPolarAngle={Math.PI / 2.05}
                 minPolarAngle={0.35}
                 target={[0, 0, 0]}
@@ -592,7 +603,12 @@ export default function EuropeMap3D() {
             <Canvas
                 // render tylko gdy coś się zmienia (obrót, zoom, kliknięcie)
                 frameloop="demand"
-                camera={{ position: [0, 15, 30], fov: 35, near: 0.1, far: 250 }}
+                camera={{
+                    position: CAMERA.position,
+                    fov: CAMERA.fov,
+                    near: 0.1,
+                    far: 250,
+                }}
                 dpr={[1, 1.5]}
                 gl={{ antialias: true, powerPreference: "high-performance" }}
                 style={{ flex: 1 }}
