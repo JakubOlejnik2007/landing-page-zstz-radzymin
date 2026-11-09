@@ -1,8 +1,59 @@
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Html, OrbitControls } from "@react-three/drei";
+import { Html, Line, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
+// W starszych wersjach three (< 0.151) funkcja nazywa się mergeBufferGeometries
+import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
+/* ------------------------------------------------------------------ */
+/*  KOLORY I CIENIOWANIE – wszystko w jednym miejscu                   */
+/* ------------------------------------------------------------------ */
+
+const COLORS = {
+    // scena
+    background: "rgb(203,238,253)",
+
+    // paleta krajów (kolor kraju = countryPalette[index % długość])
+    countryPalette: [
+        "rgb(218, 253, 207)",
+        "rgb(218, 253, 207)",
+        "rgb(218, 253, 207)",
+        "rgb(218, 253, 207)",
+        "rgb(218, 253, 207)",
+        "rgb(218, 253, 207)",
+    ],
+
+    // światła
+    ambientLight: "#ffffff",
+    mainLight: "#ffffff",
+    fillLight: "#38BDF8",
+
+    // łuki połączeń
+    arc: "crimson",
+
+    // etykiety przy markerach
+    labelBackground: "rgba(5, 20, 40, 0.92)",
+    labelText: "white",
+
+    // panel szczegółów
+    panelBackground: "rgba(5, 20, 40, 0.95)",
+    panelText: "white",
+    panelClose: "white",
+
+    // podpowiedź na dole
+    hint: "#94A3B8",
+} as const;
+
+const SHADING = {
+    // o ile (0..1) zmniejszyć jasność HSL boków/bevela względem koloru kraju
+    sideLightnessDrop: 0.18,
+    // przesunięcie jasności górnej ścianki (0 = dokładnie kolor kraju)
+    topLightnessShift: 0,
+} as const;
+
+/* ------------------------------------------------------------------ */
+/*  STAŁE MAPY                                                         */
+/* ------------------------------------------------------------------ */
 
 const MIN_LON = -25;
 const MAX_LON = 45;
@@ -11,6 +62,10 @@ const MAX_LAT = 72;
 
 const MAP_SCALE_X = 0.52;
 const MAP_SCALE_Y = 0.82;
+
+const MARKER_HEIGHT = 1.15;
+const ARC_HEIGHT = 6;
+const ARC_SEGMENTS = 24;
 
 type Position = [number, number];
 
@@ -39,17 +94,6 @@ type Marker = {
     primary?: boolean;
 };
 
-const MAP_BACKGROUND = "rgb(203,238,253)";
-const countryColors = [
-    "rgb(218, 253, 207)",
-    "rgb(218, 253, 207)",
-    "rgb(218, 253, 207)",
-    "rgb(218, 253, 207)",
-    "rgb(218, 253, 207)",
-    "rgb(218, 253, 207)",
-
-];
-
 const markers: Marker[] = [
     {
         name: "",
@@ -57,7 +101,7 @@ const markers: Marker[] = [
         coordinates: [100000, 100000],
         description: "",
         color: "#000",
-        primary: true
+        primary: true,
     },
     {
         name: "Radzymin",
@@ -94,7 +138,8 @@ const markers: Marker[] = [
         coordinates: [14.5141, 35.8992],
         description: "Projekt Erasmus+ na Malcie",
         color: "#34D399",
-    }, {
+    },
+    {
         name: "Trapani",
         country: "Włochy",
         coordinates: [12.5372, 38.0176],
@@ -140,448 +185,353 @@ const markers: Marker[] = [
         name: "Dublin",
         country: "Irlandia",
         coordinates: [-6.2603, 53.3498],
-        description: "Wizyta studyjna Erasmus+ VET – poznawanie irlandzkiego systemu kształcenia zawodowego i poszukiwanie partnerów do współpracy",
+        description:
+            "Wizyta studyjna Erasmus+ VET – poznawanie irlandzkiego systemu kształcenia zawodowego i poszukiwanie partnerów do współpracy",
         color: "#38BDF8",
-    }
+    },
 ];
 
-
+/* ------------------------------------------------------------------ */
+/*  GEOMETRIA / RZUTOWANIE                                             */
+/* ------------------------------------------------------------------ */
 
 function project(lon: number, lat: number): [number, number] {
-    return [
-        (lon - 10) * MAP_SCALE_X,
-        (lat - 54) * MAP_SCALE_Y,
-    ];
+    return [(lon - 10) * MAP_SCALE_X, (lat - 54) * MAP_SCALE_Y];
 }
 
-function getVisiblePolygons(feature: Feature): Position[][][] {
-    const polygons =
-        feature.geometry.type === "Polygon"
-            ? [feature.geometry.coordinates]
-            : feature.geometry.coordinates;
-
-    const getArea = (polygon: Position[][]) => {
-        const ring = polygon[0];
-        let area = 0;
-
-        for (let i = 0; i < ring.length; i++) {
-            const current = ring[i];
-            const next = ring[(i + 1) % ring.length];
-
-            area += current[0] * next[1] - next[0] * current[1];
-        }
-
-        return Math.abs(area / 2);
-    };
-
-    const getCenter = (polygon: Position[][]) => {
-        const ring = polygon[0];
-
-        return {
-            lon: ring.reduce((sum, point) => sum + point[0], 0) / ring.length,
-            lat: ring.reduce((sum, point) => sum + point[1], 0) / ring.length,
-        };
-    };
-
-    const europeanPolygons = polygons.filter(polygon => {
-        const { lon, lat } = getCenter(polygon);
-
-        return (
-            lon >= MIN_LON &&
-            lon <= MAX_LON &&
-            lat >= MIN_LAT &&
-            lat <= MAX_LAT
-        );
-    });
-
-    return europeanPolygons;
+function getMarkerPosition(lon: number, lat: number, height = MARKER_HEIGHT) {
+    const [x, y] = project(lon, lat);
+    return new THREE.Vector3(x, height, -y);
 }
-function createArc(
-    start: THREE.Vector3,
-    end: THREE.Vector3,
-    height = 2
-) {
+
+function createArc(start: THREE.Vector3, end: THREE.Vector3, height = 2) {
     const midpoint = new THREE.Vector3(
         (start.x + end.x) / 2,
         height,
         (start.z + end.z) / 2
     );
 
-    const curve = new THREE.QuadraticBezierCurve3(
-        start,
-        midpoint,
-        end
+    return new THREE.QuadraticBezierCurve3(start, midpoint, end).getPoints(
+        ARC_SEGMENTS
     );
-
-    return curve.getPoints(50);
 }
 
-function clipBoundary(
-    points: Position[],
-    inside: (point: Position) => boolean,
-    intersection: (a: Position, b: Position) => Position
-): Position[] {
-    const result: Position[] = [];
+function getVisiblePolygons(feature: Feature): Position[][][] {
+    const polygons: Position[][][] =
+        feature.geometry.type === "Polygon"
+            ? [feature.geometry.coordinates]
+            : feature.geometry.coordinates;
 
-    if (!points.length) return result;
+    return polygons.filter(polygon => {
+        const ring = polygon[0];
+        let lon = 0;
+        let lat = 0;
 
-    for (let i = 0; i < points.length; i++) {
-        const current = points[i];
-        const previous = points[(i + points.length - 1) % points.length];
-
-        const currentInside = inside(current);
-        const previousInside = inside(previous);
-
-        if (currentInside) {
-            if (!previousInside) {
-                result.push(intersection(previous, current));
-            }
-            result.push(current);
-        } else if (previousInside) {
-            result.push(intersection(previous, current));
+        for (const point of ring) {
+            lon += point[0];
+            lat += point[1];
         }
-    }
 
-    return result;
+        lon /= ring.length;
+        lat /= ring.length;
+
+        return lon >= MIN_LON && lon <= MAX_LON && lat >= MIN_LAT && lat <= MAX_LAT;
+    });
 }
 
-function clipRing(ring: Position[]): Position[] {
-    let points = ring.slice(0, -1);
+function isEuropeanFeature(feature: Feature) {
+    const { CONTINENT: continent, NAME: name } = feature.properties;
 
-    points = clipBoundary(
-        points,
-        p => p[0] >= MIN_LON,
-        (a, b) => {
-            const t = (MIN_LON - a[0]) / (b[0] - a[0]);
-            return [MIN_LON, a[1] + t * (b[1] - a[1])];
-        }
-    );
-
-    points = clipBoundary(
-        points,
-        p => p[0] <= MAX_LON,
-        (a, b) => {
-            const t = (MAX_LON - a[0]) / (b[0] - a[0]);
-            return [MAX_LON, a[1] + t * (b[1] - a[1])];
-        }
-    );
-
-    points = clipBoundary(
-        points,
-        p => p[1] >= MIN_LAT,
-        (a, b) => {
-            const t = (MIN_LAT - a[1]) / (b[1] - a[1]);
-            return [a[0] + t * (b[0] - a[0]), MIN_LAT];
-        }
-    );
-
-    points = clipBoundary(
-        points,
-        p => p[1] <= MAX_LAT,
-        (a, b) => {
-            const t = (MAX_LAT - a[1]) / (b[1] - a[1]);
-            return [a[0] + t * (b[0] - a[0]), MAX_LAT];
-        }
-    );
-
-    return points;
+    if (name === "Russia") return false;
+    return continent === "Europe" || name === "Turkey";
 }
 
-function createShape(
-    polygon: Position[][],
-    scale = 1
-): THREE.Shape | null {
+function createShape(polygon: Position[][], scale = 1): THREE.Shape | null {
     const outerRing = polygon[0];
 
     if (!outerRing || outerRing.length < 3) return null;
 
-    const projected = outerRing.map(([lon, lat]) =>
-        project(lon, lat)
-    );
+    const outer = outerRing.map(([lon, lat]) => project(lon, lat));
 
-    const centerX =
-        projected.reduce((sum, point) => sum + point[0], 0) /
-        projected.length;
-
-    const centerY =
-        projected.reduce((sum, point) => sum + point[1], 0) /
-        projected.length;
+    let centerX = 0;
+    let centerY = 0;
+    for (const [x, y] of outer) {
+        centerX += x;
+        centerY += y;
+    }
+    centerX /= outer.length;
+    centerY /= outer.length;
 
     const transformRing = (ring: Position[]) =>
         ring.map(([lon, lat]) => {
             const [x, y] = project(lon, lat);
-
             return [
                 centerX + (x - centerX) * scale,
                 centerY + (y - centerY) * scale,
-            ] as [number, number];
+            ] as Position;
         });
 
     const points = transformRing(outerRing);
-
     const shape = new THREE.Shape();
     shape.moveTo(points[0][0], points[0][1]);
+    for (let i = 1; i < points.length; i++) {
+        shape.lineTo(points[i][0], points[i][1]);
+    }
 
-    points.slice(1).forEach(([x, y]) => {
-        shape.lineTo(x, y);
-    });
-
-    polygon.slice(1).forEach(ring => {
-        const holePoints = transformRing(ring);
-
+    for (let r = 1; r < polygon.length; r++) {
+        const holePoints = transformRing(polygon[r]);
         const hole = new THREE.Path();
         hole.moveTo(holePoints[0][0], holePoints[0][1]);
-
-        holePoints.slice(1).forEach(([x, y]) => {
-            hole.lineTo(x, y);
-        });
-
+        for (let i = 1; i < holePoints.length; i++) {
+            hole.lineTo(holePoints[i][0], holePoints[i][1]);
+        }
         shape.holes.push(hole);
-    });
+    }
 
     return shape;
 }
 
-function CountryMap({
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+
+/**
+ * Buduje JEDNĄ geometrię dla wszystkich krajów.
+ * Kolory są zapisane w vertex colors:
+ *  - ścianka górna/dolna = kolor kraju,
+ *  - boki + bevel = ten sam kolor o obniżonej jasności (HSL).
+ * Dzięki temu cała mapa to 1 mesh, 1 materiał, 1 draw call.
+ */
+function buildCountriesGeometry(
+    data: FeatureCollection
+): THREE.BufferGeometry | null {
+    const parts: THREE.BufferGeometry[] = [];
+
+    const base = new THREE.Color();
+    const top = new THREE.Color();
+    const side = new THREE.Color();
+    const hsl = { h: 0, s: 0, l: 0 };
+
+    data.features.forEach((feature, index) => {
+        if (!isEuropeanFeature(feature)) return;
+
+        // losowanie koloru kraju – bez zmian (paleta + indeks)
+        base.set(COLORS.countryPalette[index % COLORS.countryPalette.length]);
+        base.getHSL(hsl, THREE.SRGBColorSpace);
+
+        top.setHSL(
+            hsl.h,
+            hsl.s,
+            clamp01(hsl.l + SHADING.topLightnessShift),
+            THREE.SRGBColorSpace
+        );
+        side.setHSL(
+            hsl.h,
+            hsl.s,
+            clamp01(hsl.l - SHADING.sideLightnessDrop),
+            THREE.SRGBColorSpace
+        );
+
+        for (const polygon of getVisiblePolygons(feature)) {
+            const shape = createShape(polygon, 0.985);
+            if (!shape) continue;
+
+            const geometry = new THREE.ExtrudeGeometry(shape, {
+                depth: 0.25,
+                bevelEnabled: true,
+                bevelSegments: 1,
+                steps: 1,
+                bevelSize: 0.045,
+                bevelThickness: 0.045,
+            });
+
+            geometry.rotateX(-Math.PI / 2);
+            geometry.deleteAttribute("uv"); // niepotrzebne, mniej pamięci
+
+            const count = geometry.attributes.position.count;
+            const colors = new Float32Array(count * 3);
+
+            const paint = (start: number, length: number, c: THREE.Color) => {
+                for (let i = start; i < start + length; i++) {
+                    colors[i * 3] = c.r;
+                    colors[i * 3 + 1] = c.g;
+                    colors[i * 3 + 2] = c.b;
+                }
+            };
+
+            if (geometry.groups.length) {
+                // grupa 0 = ścianki górna/dolna, grupa 1 = boki + bevel
+                for (const g of geometry.groups) {
+                    paint(g.start, g.count, g.materialIndex === 0 ? top : side);
+                }
+            } else {
+                paint(0, count, top);
+            }
+
+            geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+            geometry.clearGroups();
+            parts.push(geometry);
+        }
+    });
+
+    if (!parts.length) return null;
+
+    const merged = mergeGeometries(parts, false);
+    parts.forEach(part => part.dispose());
+
+    return merged;
+}
+
+/* ------------------------------------------------------------------ */
+/*  DANE STATYCZNE POLICZONE RAZ (poza Reactem)                        */
+/* ------------------------------------------------------------------ */
+
+const visibleMarkers = markers
+    .filter(marker => marker.name)
+    .map(marker => ({
+        marker,
+        position: getMarkerPosition(marker.coordinates[0], marker.coordinates[1]),
+    }));
+
+const homePosition = getMarkerPosition(21.184, 52.416);
+
+const arcs = visibleMarkers
+    .filter(({ marker }) => !marker.primary)
+    .map(({ marker, position }) => ({
+        key: marker.name,
+        points: createArc(homePosition, position, ARC_HEIGHT),
+    }));
+
+// współdzielone geometrie markerów
+const SPHERE_GEOMETRY = new THREE.SphereGeometry(0.32, 12, 12);
+const STEM_GEOMETRY = new THREE.CylinderGeometry(0.025, 0.025, 0.7, 6);
+
+/* ------------------------------------------------------------------ */
+/*  KOMPONENTY                                                         */
+/* ------------------------------------------------------------------ */
+
+const CountryMap = memo(function CountryMap({
     data,
 }: {
     data: FeatureCollection;
 }) {
-    const countries = useMemo(() => {
-        const geometries: {
-            id: string;
-            geometry: THREE.ExtrudeGeometry;
-            color: string;
-        }[] = [];
+    const geometry = useMemo(() => buildCountriesGeometry(data), [data]);
 
-        data.features.forEach((feature, index) => {
-            const continent = feature.properties.CONTINENT;
-            const name = feature.properties.NAME;
+    useEffect(() => () => geometry?.dispose(), [geometry]);
 
-            if (
-                continent !== "Europe" &&
-                name !== "Turkey" || name === "Russia"
-            ) {
-                return;
-            }
-
-            const polygons = getVisiblePolygons(feature);
-
-            polygons.forEach((polygon: Position[][]) => {
-                const shape = createShape(polygon, 0.985);
-
-                if (!shape) return;
-
-                const geometry = new THREE.ExtrudeGeometry(shape, {
-                    depth: 0.25,
-                    bevelEnabled: true,
-                    bevelSegments: 1,
-                    steps: 1,
-                    bevelSize: 0.045,
-                    bevelThickness: 0.045,
-                });
-
-                geometry.rotateX(-Math.PI / 2);
-                geometry.computeVertexNormals();
-
-                geometries.push({
-                    id: `${index}-${geometries.length}`,
-                    geometry,
-                    color: countryColors[index % countryColors.length],
-                });
-            });
-        });
-
-        return geometries;
-    }, [data]);
+    if (!geometry) return null;
 
     return (
+        <mesh geometry={geometry} matrixAutoUpdate={false} dispose={null}>
+            {/* Lambert = oświetlenie liczone per wierzchołek, najtańsze cieniowanie */}
+            <meshLambertMaterial vertexColors />
+        </mesh>
+    );
+});
+
+const ConnectionArcs = memo(function ConnectionArcs() {
+    return (
+        <>
+            {arcs.map(arc => (
+                <Line
+                    key={arc.key}
+                    points={arc.points}
+                    color={COLORS.arc}
+                    lineWidth={3}
+                    transparent
+                    opacity={0.7}
+                />
+            ))}
+        </>
+    );
+});
+
+const ProjectMarkers = memo(function ProjectMarkers({
+    onSelect,
+}: {
+    onSelect: (marker: Marker) => void;
+}) {
+    return (
         <group>
-            {countries.map(country => (
-                <mesh
-                    key={country.id}
-                    geometry={country.geometry}
-                >
-                    <meshStandardMaterial
-                        attach="material-0"
-                        color={new THREE.Color(country.color).multiplyScalar(0.7)}
-                        roughness={0.65}
-                        metalness={0.25}
-                    />
-                    <meshStandardMaterial
-                        attach="material-1"
-                        color="#2685CF"
-                        roughness={0.45}
-                        metalness={0.2}
-                    />
-                </mesh>
+            {visibleMarkers.map(({ marker, position }) => (
+                <group key={marker.name} position={position}>
+                    <mesh
+                        geometry={SPHERE_GEOMETRY}
+                        dispose={null}
+                        onClick={() => onSelect(marker)}
+                    >
+                        {/* Basic = bez liczenia świateł, wygląda jak dawny emissive */}
+                        <meshBasicMaterial color={marker.color} />
+                    </mesh>
+
+                    <mesh
+                        geometry={STEM_GEOMETRY}
+                        dispose={null}
+                        position={[0, -0.65, 0]}
+                    >
+                        <meshBasicMaterial color={marker.color} />
+                    </mesh>
+
+                    <Html
+                        position={[0.45, 0.8, 0]}
+                        center={false}
+                        sprite
+                        distanceFactor={12}
+                        occlude={false}
+                        zIndexRange={[9999, 0]}
+                        style={{ pointerEvents: "auto", whiteSpace: "nowrap" }}
+                    >
+                        <div
+                            onClick={event => {
+                                event.stopPropagation();
+                                onSelect(marker);
+                            }}
+                            style={{
+                                padding: "6px 11px",
+                                borderRadius: "7px",
+                                background: COLORS.labelBackground,
+                                border: `1px solid ${marker.color}`,
+                                color: COLORS.labelText,
+                                fontSize: "13px",
+                                fontWeight: 600,
+                                whiteSpace: "nowrap",
+                                cursor: "pointer",
+                                boxShadow: `0 0 12px ${marker.color}40`,
+                            }}
+                        >
+                            {marker.name}
+                        </div>
+                    </Html>
+                </group>
             ))}
         </group>
     );
-}
+});
 
-import { Line } from "@react-three/drei";
-
-function ConnectionArc({
-    start,
-    end,
-}: {
-    start: THREE.Vector3;
-    end: THREE.Vector3;
-}) {
-    const points = useMemo(
-        () => createArc(start, end, 6),
-        [start, end]
-    );
-
-    return (
-        <Line
-            points={points}
-            color="crimson"
-            lineWidth={3}
-            transparent
-            opacity={0.7}
-        />
-    );
-}
-
-function ProjectMarkers({
-    onSelect,
-}: {
-    onSelect: (marker: Marker) => void;
-}) {
-    return (
-        <group>
-            {markers.map((marker, index) => {
-                const [x, z] = project(
-                    marker.coordinates[0],
-                    marker.coordinates[1]
-                );
-
-                return (
-                    <group
-                        key={`${index}-${marker.name}`}
-                        position={[x, 1.15, -z]}
-                    >
-                        <mesh
-                            onClick={() => onSelect(marker)}
-                        >
-                            <sphereGeometry args={[0.32, 24, 24]} />
-                            <meshStandardMaterial
-                                color={marker.color}
-                                emissive={marker.color}
-                                emissiveIntensity={1.5}
-                            />
-                        </mesh>
-
-                        <mesh
-                            position={[0, -0.65, 0]}
-                        >
-                            <cylinderGeometry args={[0.025, 0.025, 0.7, 8]} />
-                            <meshStandardMaterial color={marker.color} />
-                        </mesh>
-
-                        <Html
-                            position={[0.45, 0.8, 0]}
-                            center={false}
-                            sprite
-                            distanceFactor={12}
-                            occlude={false}
-                            zIndexRange={[9999, 0]}
-                            style={{
-                                pointerEvents: "auto",
-                                whiteSpace: "nowrap",
-                            }}
-                        >
-                            <div
-                                onClick={(event) => {
-                                    event.stopPropagation();
-                                    onSelect(marker);
-                                }}
-                                style={{
-                                    padding: "6px 11px",
-                                    borderRadius: "7px",
-                                    background: "rgba(5, 20, 40, 0.92)",
-                                    border: `1px solid ${marker.color}`,
-                                    color: "white",
-                                    fontSize: "13px",
-                                    fontWeight: 600,
-                                    whiteSpace: "nowrap",
-                                    cursor: "pointer",
-                                    boxShadow: `0 0 12px ${marker.color}40`,
-                                }}
-                            >
-                                {marker.name}
-                            </div>
-                        </Html>
-                    </group>
-                );
-            })}
-        </group>
-    );
-}
-function getMarkerPosition(
-    lon: number,
-    lat: number,
-    height = 1.15
-) {
-    const [x, y] = project(lon, lat);
-
-    return new THREE.Vector3(x, height, -y);
-}
-
-
-function Scene({
+const Scene = memo(function Scene({
     data,
     onSelect,
 }: {
     data: FeatureCollection;
     onSelect: (marker: Marker) => void;
 }) {
-
-    const radzymin = getMarkerPosition(21.184, 52.416);
-
     return (
         <>
-            <color attach="background" args={[MAP_BACKGROUND]} />
+            <color attach="background" args={[COLORS.background]} />
 
-            <ambientLight intensity={1.2} />
-
+            <ambientLight intensity={1.2} color={COLORS.ambientLight} />
             <directionalLight
                 position={[-10, 20, 10]}
                 intensity={2.5}
+                color={COLORS.mainLight}
             />
-
             <directionalLight
                 position={[10, 12, -10]}
                 intensity={1}
-                color="#38BDF8"
+                color={COLORS.fillLight}
             />
 
-            {
-
-                markers.filter(location => !location.primary).map(location => {
-                    const end = getMarkerPosition(
-                        location.coordinates[0],
-                        location.coordinates[1]
-                    );
-
-                    return (
-                        <ConnectionArc
-                            key={location.name}
-                            start={radzymin}
-                            end={end}
-                        />
-                    );
-                })
-            }
-
+            <ConnectionArcs />
             <CountryMap data={data} />
-
             <ProjectMarkers onSelect={onSelect} />
-
-
-
 
             <OrbitControls
                 enableDamping
@@ -594,7 +544,7 @@ function Scene({
             />
         </>
     );
-}
+});
 
 export default function EuropeMap3D() {
     const [data, setData] = useState<FeatureCollection | null>(null);
@@ -602,7 +552,9 @@ export default function EuropeMap3D() {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        fetch("/data/europe.geojson")
+        const controller = new AbortController();
+
+        fetch("/data/europe.geojson", { signal: controller.signal })
             .then(response => {
                 if (!response.ok) {
                     throw new Error("Nie udało się pobrać GeoJSON");
@@ -610,7 +562,11 @@ export default function EuropeMap3D() {
                 return response.json();
             })
             .then(setData)
-            .catch(error => setError(error.message));
+            .catch(err => {
+                if (err.name !== "AbortError") setError(err.message);
+            });
+
+        return () => controller.abort();
     }, []);
 
     if (error) {
@@ -622,52 +578,48 @@ export default function EuropeMap3D() {
     }
 
     return (
-        <div style={{
-            width: "100%",
-            flex: 1,
-            minHeight: 0,
-            position: "relative",
-            overflow: "hidden",
-            display: "flex",
-            flexDirection: "column"
-        }}>
+        <div
+            style={{
+                width: "100%",
+                flex: 1,
+                minHeight: 0,
+                position: "relative",
+                overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+            }}
+        >
             <Canvas
-                camera={{
-                    position: [0, 15, 30],
-                    fov: 35,
-                    near: 0.1,
-                    far: 250,
-                }}
-                dpr={[1, 2]}
-                style={{
-
-                    flex: 1,
-                }}
+                // render tylko gdy coś się zmienia (obrót, zoom, kliknięcie)
+                frameloop="demand"
+                camera={{ position: [0, 15, 30], fov: 35, near: 0.1, far: 250 }}
+                dpr={[1, 1.5]}
+                gl={{ antialias: true, powerPreference: "high-performance" }}
+                style={{ flex: 1 }}
             >
-                <Scene
-                    data={data}
-                    onSelect={setSelected}
-                />
+                <Scene data={data} onSelect={setSelected} />
             </Canvas>
 
             {selected && (
-                <div style={{
-                    position: "absolute",
-                    right: 20,
-                    top: 20,
-                    width: 230,
-                    padding: 18,
-                    borderRadius: 12,
-                    background: "rgba(5, 20, 40, 0.95)",
-                    border: `1px solid ${selected.color}`,
-                    color: "white",
-                }}>
+                <div
+                    style={{
+                        position: "absolute",
+                        right: 20,
+                        top: 20,
+                        width: 230,
+                        padding: 18,
+                        borderRadius: 12,
+                        background: COLORS.panelBackground,
+                        border: `1px solid ${selected.color}`,
+                        color: COLORS.panelText,
+                    }}
+                >
                     <button
                         onClick={() => setSelected(null)}
                         style={{
                             float: "right",
                             background: "transparent",
-                            color: "white",
+                            color: COLORS.panelClose,
                             border: 0,
                             cursor: "pointer",
                             fontSize: 18,
@@ -682,14 +634,16 @@ export default function EuropeMap3D() {
                 </div>
             )}
 
-            <div style={{
-                position: "absolute",
-                left: 18,
-                bottom: 18,
-                color: "#94A3B8",
-                fontSize: 12,
-                pointerEvents: "none",
-            }}>
+            <div
+                style={{
+                    position: "absolute",
+                    left: 18,
+                    bottom: 18,
+                    color: COLORS.hint,
+                    fontSize: 12,
+                    pointerEvents: "none",
+                }}
+            >
                 Przeciągnij, aby obrócić · Scroll, aby przybliżyć
             </div>
         </div>
