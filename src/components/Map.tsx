@@ -3,7 +3,6 @@ import { Canvas } from "@react-three/fiber";
 import { Html, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 
-const MAP_BACKGROUND = "#071426";
 
 const MIN_LON = -25;
 const MAX_LON = 45;
@@ -40,15 +39,15 @@ type Marker = {
     primary?: boolean;
 };
 
+const MAP_BACKGROUND = "rgb(203,238,253)";
 const countryColors = [
-    "#A5C8E8",
-    "#B8D8D0",
-    "#D8C8E8",
-    "#E8D5B5",
-    "#B9C9E8",
-    "#D8E2B8",
-    "#E8C5C5",
-    "#B8DCE8",
+    "rgb(218, 253, 207)",
+    "rgb(218, 253, 207)",
+    "rgb(218, 253, 207)",
+    "rgb(218, 253, 207)",
+    "rgb(218, 253, 207)",
+    "rgb(218, 253, 207)",
+
 ];
 
 const markers: Marker[] = [
