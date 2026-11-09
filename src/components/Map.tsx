@@ -551,7 +551,7 @@ const Scene = memo(function Scene({
                 maxDistance={CAMERA.maxDistance}
                 maxPolarAngle={Math.PI / 2.05}
                 minPolarAngle={0.35}
-                target={[0, 0, 0]}
+                target={[2.5, 0, 3.5]}
             />
         </>
     );
