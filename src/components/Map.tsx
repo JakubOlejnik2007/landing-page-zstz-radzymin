@@ -10,26 +10,28 @@ import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js
 /* ------------------------------------------------------------------ */
 
 const COLORS = {
-    // scena
-    background: "rgb(203,238,253)",
+    // scena – morze: jasna, turkusowa woda wokół mapy, ciemniejsza i głębsza ku brzegom
+    // (gradient jest tłem CSS za przezroczystym canvasem)
+    background:
+        "radial-gradient(ellipse 75% 70% at 50% 46%, #C9F0F7 0%, #8FD3E8 32%, #4FA6D1 66%, #2B76AE 100%)",
 
     // paleta krajów (kolor kraju = countryPalette[index % długość])
     countryPalette: [
-        "rgb(218, 253, 207)",
-        "rgb(218, 253, 207)",
-        "rgb(218, 253, 207)",
-        "rgb(218, 253, 207)",
-        "rgb(218, 253, 207)",
-        "rgb(218, 253, 207)",
+        "rgb(189, 229, 177)",
+        "rgb(204, 224, 170)",
+        "rgb(230, 213, 173)",
+        "rgb(220, 236, 189)",
     ],
 
     // światła
-    ambientLight: "#ffffff",
-    mainLight: "#ffffff",
-    fillLight: "#38BDF8",
+    ambientLight: "#FFF4E0",
+    mainLight: "#FFE9C7", // ciepłe słońce
+    fillLight: "#6FB7E8", // chłodne światło odbite od wody
+    hemiSky: "#E6F6FF",
+    hemiGround: "#7FA37A",
 
-    // łuki połączeń
-    arc: "crimson",
+    // łuki połączeń – czerwień
+    arc: "#D9383A",
 
     // etykiety przy markerach
     labelBackground: "rgba(5, 20, 40, 0.92)",
@@ -41,7 +43,7 @@ const COLORS = {
     panelClose: "white",
 
     // podpowiedź na dole
-    hint: "#94A3B8",
+    hint: "#E8F6FC", // jasny tekst czytelny na ciemniejszej wodzie
 } as const;
 
 const SHADING = {
@@ -114,12 +116,13 @@ const markers: Marker[] = [
         color: "#000",
         primary: true,
     },
+    // Kolory pinów: stonowana paleta współgrająca z zielono-piaskową mapą
     {
         name: "Radzymin",
         country: "Polska",
         coordinates: [21.184, 52.416],
         description: "Siedziba szkoły",
-        color: "#FACC15",
+        color: "#F2B84B",
         primary: true,
     },
     {
@@ -127,70 +130,70 @@ const markers: Marker[] = [
         country: "Hiszpania",
         coordinates: [2.1686, 41.3874],
         description: "Projekt Erasmus+ w Barcelonie",
-        color: "#38BDF8",
+        color: "#2A9D8F",
     },
     {
         name: "Malaga",
         country: "Hiszpania",
         coordinates: [-4.4214, 36.7213],
         description: "Projekt Erasmus+ w Maladze",
-        color: "#F59E0B",
+        color: "#E07A5F",
     },
     {
         name: "Rzym",
         country: "Włochy",
         coordinates: [12.4964, 41.9028],
         description: "Projekt Erasmus+ w Rzymie",
-        color: "#A78BFA",
+        color: "#8D6BB0",
     },
     {
         name: "Malta",
         country: "Malta",
         coordinates: [14.5141, 35.8992],
         description: "Projekt Erasmus+ na Malcie",
-        color: "#34D399",
+        color: "#3D7EA6",
     },
     {
         name: "Trapani",
         country: "Włochy",
         coordinates: [12.5372, 38.0176],
         description: "Kurs Yoga and Meditation for Educators w ramach akredytacji SCH",
-        color: "#A78BFA",
+        color: "#8D6BB0",
     },
     {
         name: "Rodos",
         country: "Grecja",
         coordinates: [28.2278, 36.4341],
         description: "Szkolenie Climate Change Education dla nauczycieli",
-        color: "#34D399",
+        color: "#3D7EA6",
     },
     {
         name: "Florencja",
         country: "Włochy",
         coordinates: [11.2558, 43.7696],
         description: "Kurs językowy dla nauczycieli w ramach akredytacji SCH",
-        color: "#F59E0B",
+        color: "#E07A5F",
     },
     {
         name: "Walencja",
         country: "Hiszpania",
         coordinates: [-0.3763, 39.4699],
         description: "Szkolenie dotyczące wykorzystania sztucznej inteligencji w edukacji",
-        color: "#38BDF8",
+        color: "#2A9D8F",
     },
     {
         name: "Lizbona",
         country: "Portugalia",
         coordinates: [-9.1393, 38.7223],
         description: "Szkolenie Leadership and Conflict Management dla kadry kierowniczej",
-        color: "#F472B6",
+        color: "#C95C7C",
     },
     {
         name: "Padwa",
         country: "Włochy",
         coordinates: [11.8768, 45.4064],
         description: "Kurs Italian cooking and UNESCO Mediterranean diet dla nauczycieli",
-        color: "#FACC15",
+        color: "#F2B84B",
     },
     {
         name: "Dublin",
@@ -198,7 +201,7 @@ const markers: Marker[] = [
         coordinates: [-6.2603, 53.3498],
         description:
             "Wizyta studyjna Erasmus+ VET – poznawanie irlandzkiego systemu kształcenia zawodowego i poszukiwanie partnerów do współpracy",
-        color: "#38BDF8",
+        color: "#2A9D8F",
     },
 ];
 
@@ -412,8 +415,32 @@ const arcs = visibleMarkers
     }));
 
 // współdzielone geometrie markerów
-const SPHERE_GEOMETRY = new THREE.SphereGeometry(0.32, 12, 12);
+const SPHERE_GEOMETRY = new THREE.SphereGeometry(0.32, 20, 20);
 const STEM_GEOMETRY = new THREE.CylinderGeometry(0.025, 0.025, 0.7, 6);
+// miękki cień pod pinem (płaski dysk na powierzchni mapy)
+const SHADOW_GEOMETRY = new THREE.PlaneGeometry(0.9, 0.9);
+// wysokość górnej ścianki mapy względem środka pinu (depth 0.25 + bevel 0.045)
+const SHADOW_Y = 0.295 - MARKER_HEIGHT + 0.012;
+
+// radialna maska cienia (alphaMap czyta kanał zielony): biały środek -> czarny brzeg = pełna -> zerowa krycie
+const SHADOW_ALPHA_MAP = (() => {
+    const size = 128;
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = size;
+    const ctx = canvas.getContext("2d")!;
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, size, size);
+    const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+    g.addColorStop(0, "#ffffff");
+    g.addColorStop(0.35, "#8c8c8c");
+    g.addColorStop(0.7, "#2a2a2a");
+    g.addColorStop(1, "#000000");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, size, size);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.needsUpdate = true;
+    return texture;
+})();
 
 /* ------------------------------------------------------------------ */
 /*  KOMPONENTY                                                         */
@@ -448,7 +475,7 @@ const ConnectionArcs = memo(function ConnectionArcs() {
                     color={COLORS.arc}
                     lineWidth={3}
                     transparent
-                    opacity={0.7}
+                    opacity={0.9}
                 />
             ))}
         </>
@@ -464,13 +491,33 @@ const ProjectMarkers = memo(function ProjectMarkers({
         <group>
             {visibleMarkers.map(({ marker, position }) => (
                 <group key={marker.name} position={position}>
+                    {/* cień pod pinem */}
+                    <mesh
+                        geometry={SHADOW_GEOMETRY}
+                        dispose={null}
+                        rotation={[-Math.PI / 2, 0, 0]}
+                        position={[0.06, SHADOW_Y, 0.06]}
+                    >
+                        <meshBasicMaterial
+                            color="#1c2a14"
+                            alphaMap={SHADOW_ALPHA_MAP}
+                            transparent
+                            opacity={0.55}
+                            depthWrite={false}
+                        />
+                    </mesh>
+
                     <mesh
                         geometry={SPHERE_GEOMETRY}
                         dispose={null}
                         onClick={() => onSelect(marker)}
                     >
-                        {/* Basic = bez liczenia świateł, wygląda jak dawny emissive */}
-                        <meshBasicMaterial color={marker.color} />
+                        {/* Lambert = matowa, cieniowana kulka (bez białego połysku); emissive utrzymuje kolor w cieniu */}
+                        <meshLambertMaterial
+                            color={marker.color}
+                            emissive={marker.color}
+                            emissiveIntensity={0.18}
+                        />
                     </mesh>
 
                     <mesh
@@ -478,7 +525,7 @@ const ProjectMarkers = memo(function ProjectMarkers({
                         dispose={null}
                         position={[0, -0.65, 0]}
                     >
-                        <meshBasicMaterial color={marker.color} />
+                        <meshLambertMaterial color={marker.color} />
                     </mesh>
 
                     <Html
@@ -501,6 +548,7 @@ const ProjectMarkers = memo(function ProjectMarkers({
                                 background: COLORS.labelBackground,
                                 border: `1px solid ${marker.color}`,
                                 color: COLORS.labelText,
+                                fontFamily: 'Helvetica, "Helvetica Neue", Arial, sans-serif',
                                 fontSize: "13px",
                                 fontWeight: 600,
                                 whiteSpace: "nowrap",
@@ -526,17 +574,23 @@ const Scene = memo(function Scene({
 }) {
     return (
         <>
-            <color attach="background" args={[COLORS.background]} />
+            {/* tło (gradient morza) jest w CSS za przezroczystym canvasem */}
 
-            <ambientLight intensity={1.2} color={COLORS.ambientLight} />
+            {/* niższe ambient + hemisphere = większy kontrast między jasnymi a zacienionymi ściankami */}
+            <ambientLight intensity={0.5} color={COLORS.ambientLight} />
+            <hemisphereLight
+                args={[COLORS.hemiSky, COLORS.hemiGround, 0.6]}
+            />
+            {/* słońce nisko z lewej – wyraźnie oświetla górę i lewe boki, rzuca cień na prawe */}
             <directionalLight
-                position={[-10, 20, 10]}
-                intensity={2.5}
+                position={[-16, 13, 9]}
+                intensity={3.4}
                 color={COLORS.mainLight}
             />
+            {/* chłodne światło z przeciwnej strony – rysuje krawędzie od prawej */}
             <directionalLight
-                position={[10, 12, -10]}
-                intensity={1}
+                position={[14, 8, -12]}
+                intensity={1.3}
                 color={COLORS.fillLight}
             />
 
@@ -596,6 +650,7 @@ export default function EuropeMap3D() {
                 minHeight: 0,
                 position: "relative",
                 overflow: "hidden",
+                background: COLORS.background,
                 display: "flex",
                 flexDirection: "column",
             }}
@@ -611,7 +666,7 @@ export default function EuropeMap3D() {
                 }}
                 dpr={[1, 1.5]}
                 gl={{ antialias: true, powerPreference: "high-performance" }}
-                style={{ flex: 1 }}
+                style={{ flex: 1, background: "transparent" }}
             >
                 <Scene data={data} onSelect={setSelected} />
             </Canvas>
