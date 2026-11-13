@@ -17,8 +17,8 @@ function App({ languageConfig }: { languageConfig: LanguageConfig }) {
     <>
       <Navbar languageConfig={languageConfig} />
       <div className="page-section"></div>
-      <div className="page-section">
-        <h2>Uczniowie ZSTZ w całej Europie!</h2>
+      <div className="page-section map-section">
+        <h2 className="map-header">Uczniowie ZSTZ w całej Europie!</h2>
         <EuropeMap3D />
       </div>
       <div className="page-section"></div>
