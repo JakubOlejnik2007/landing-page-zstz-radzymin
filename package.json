@@ -12,8 +12,11 @@
   "dependencies": {
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
+    "i18next": "^27.0.1",
+    "i18next-http-backend": "^4.0.10",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "react-i18next": "^18.0.1",
     "three": "^0.187.0"
   },
   "devDependencies": {
