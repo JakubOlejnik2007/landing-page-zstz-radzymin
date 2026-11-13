@@ -1,0 +1,91 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 72px;
+    padding: 0 5%;
+
+    background: rgba(7, 20, 38, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar-logo {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.navbar-link {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.navbar-link:hover {
+    color: white;
+}
+
+.navbar-language select {
+    padding: 9px 32px 9px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+
+    background: #10243d;
+    color: white;
+
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.navbar-language select:focus {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar-language option {
+    background: #10243d;
+    color: white;
+}
+
+@media (max-width: 700px) {
+    .navbar {
+        min-height: 64px;
+        padding: 0 16px;
+        gap: 16px;
+    }
+
+    .navbar-links {
+        flex: 1;
+        overflow-x: auto;
+        gap: 20px;
+        scrollbar-width: none;
+    }
+
+    .navbar-links::-webkit-scrollbar {
+        display: none;
+    }
+
+    .navbar-link {
+        white-space: nowrap;
+        font-size: 0.85rem;
+    }
+}
