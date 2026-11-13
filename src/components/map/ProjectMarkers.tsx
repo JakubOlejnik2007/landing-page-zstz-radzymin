@@ -65,8 +65,8 @@ const ProjectMarkers = memo(function ProjectMarkers({
                             center={false}
                             sprite
                             distanceFactor={12}
+                            zIndexRange={[0, 2]}
                             occlude={false}
-                            zIndexRange={[9999, 0]}
                             style={{ pointerEvents: "auto", whiteSpace: "nowrap" }}
                         >
                             <div

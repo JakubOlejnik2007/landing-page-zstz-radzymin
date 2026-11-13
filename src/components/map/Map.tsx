@@ -102,6 +102,7 @@ export default function EuropeMap3D() {
                         width: 230,
                         padding: 18,
                         borderRadius: 12,
+                        zIndex: 40,
                         background: COLORS.panelBackground,
                         border: `1px solid ${selected.color}`,
                         color: COLORS.panelText,
