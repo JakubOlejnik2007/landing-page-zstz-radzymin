@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import type { LanguageConfig } from "../lang/i18n";
-import "../styles/Navbar.css";
+import "../styles/navbar.css";
 
 interface NavbarProps {
     languageConfig: LanguageConfig;
