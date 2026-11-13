@@ -9,8 +9,9 @@ import { COLORS, CAMERA } from "./MapConsts";
 
 export default function EuropeMap3D() {
     const [data, setData] = useState<FeatureCollection | null>(null);
-    const [projects, setProjects] = useState<ErasmusProject[] | null>(null);
     const [selected, setSelected] = useState<MapMarker | null>(null);
+    const [projects, setProjects] = useState<ErasmusProject[] | null>(null);
+    const [selectedProject, setSelectedProject] = useState<ErasmusProject | null>(null);
     const [error, setError] = useState("");
 
     useEffect(() => {
@@ -56,6 +57,11 @@ export default function EuropeMap3D() {
         );
     }, [projects]);
 
+    const handleSelect = (marker: MapMarker) => {
+        setSelected(marker);
+        setSelectedProject(null);
+    };
+
     if (error) {
         return <div>{error}</div>;
     }
@@ -90,8 +96,9 @@ export default function EuropeMap3D() {
                 gl={{ antialias: true, powerPreference: "high-performance" }}
                 style={{ flex: 1, background: "transparent" }}
             >
-                <Scene data={data} markers={markers} onSelect={setSelected} />
+                <Scene data={data} markers={markers} onSelect={handleSelect} />
             </Canvas>
+
 
             {selected && (
                 <div
@@ -99,7 +106,7 @@ export default function EuropeMap3D() {
                         position: "absolute",
                         right: 20,
                         top: 20,
-                        width: 230,
+                        width: 280,
                         padding: 18,
                         borderRadius: 12,
                         zIndex: 40,
@@ -111,7 +118,13 @@ export default function EuropeMap3D() {
                     }}
                 >
                     <button
-                        onClick={() => setSelected(null)}
+                        onClick={() => {
+                            if (selectedProject) {
+                                setSelectedProject(null);
+                            } else {
+                                setSelected(null);
+                            }
+                        }}
                         style={{
                             float: "right",
                             background: "transparent",
@@ -124,30 +137,53 @@ export default function EuropeMap3D() {
                         ×
                     </button>
 
-                    {selected.project ? (
+                    {selectedProject ? (
                         <>
-                            <h3>{selected.project.title}</h3>
+                            <button
+                                onClick={() => setSelectedProject(null)}
+                                style={{
+                                    background: "transparent",
+                                    color: COLORS.panelText,
+                                    border: 0,
+                                    cursor: "pointer",
+                                    padding: 0,
+                                }}
+                            >
+                                ← Wróć do miasta
+                            </button>
+
+                            <h3>{selectedProject.title}</h3>
                             <p>{selected.name}, {selected.country}</p>
-                            <p>{selected.project.year} · {selected.project.program}</p>
-                            <p>{selected.project.number}</p>
-                            {selected.project.amount !== null && (
+                            <p>{selectedProject.year} · {selectedProject.program}</p>
+                            <p>{selectedProject.number}</p>
+
+                            {selectedProject.amount !== null && (
                                 <p>
-                                    Dofinansowanie: {new Intl.NumberFormat("pl-PL").format(selected.project.amount)} {selected.project.currency}
+                                    Dofinansowanie: {new Intl.NumberFormat("pl-PL").format(selectedProject.amount)} {selectedProject.currency}
                                 </p>
                             )}
-                            <p>{selected.project.participants}</p>
-                            <p>{selected.description}</p>
-                            <p>{selected.project.audience === "teachers" ? "Projekt dla nauczycieli" : "Projekt z udziałem uczniów"}</p>
-                            {selected.project.article.find(item => item.language === "pl")?.content
+
+                            <p>{selectedProject.participants}</p>
+                            <p>
+                                {selectedProject.audience === "teachers"
+                                    ? "Projekt dla nauczycieli"
+                                    : "Projekt z udziałem uczniów"}
+                            </p>
+
+                            {(selectedProject.article.find(item => item.language === "pl")?.content ?? "")
                                 .split("{?}")
                                 .map((part, index) => (
                                     <span key={index}>
                                         {part && <p>{part}</p>}
-                                        {index < selected.project!.assets.length && (
+                                        {index < selectedProject.assets.length && (
                                             <img
-                                                src={selected.project!.assets[index]}
+                                                src={selectedProject.assets[index]}
                                                 alt=""
-                                                style={{ width: "100%", borderRadius: 8, margin: "8px 0" }}
+                                                style={{
+                                                    width: "100%",
+                                                    borderRadius: 8,
+                                                    margin: "8px 0",
+                                                }}
                                             />
                                         )}
                                     </span>
@@ -157,11 +193,42 @@ export default function EuropeMap3D() {
                         <>
                             <h3>{selected.name}</h3>
                             <p>{selected.country}</p>
-                            <p>{selected.description}</p>
+
+                            {selected.projects && selected.projects.length > 0 ? (
+                                <>
+                                    <p>{selected.projects.length} projektów</p>
+
+                                    {selected.projects.map(project => (
+                                        <button
+                                            key={project.id}
+                                            onClick={() => setSelectedProject(project)}
+                                            style={{
+                                                display: "block",
+                                                width: "100%",
+                                                textAlign: "left",
+                                                padding: 10,
+                                                marginBottom: 8,
+                                                borderRadius: 8,
+                                                border: `1px solid ${project.hue}`,
+                                                background: "transparent",
+                                                color: COLORS.panelText,
+                                                cursor: "pointer",
+                                            }}
+                                        >
+                                            <strong>{project.title}</strong>
+                                            <br />
+                                            <small>{project.year} · {project.program}</small>
+                                        </button>
+                                    ))}
+                                </>
+                            ) : (
+                                <p>{selected.description}</p>
+                            )}
                         </>
                     )}
                 </div>
             )}
+
 
             <div
                 style={{

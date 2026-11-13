@@ -32,6 +32,10 @@ export type ProjectMapMarker = Marker & {
     project: ErasmusProject;
 };
 
+export type CityMarker = Marker & {
+    projects: ErasmusProject[];
+};
+
 export type MapMarker = Marker & {
-    project?: ErasmusProject;
+    projects?: ErasmusProject[];
 };

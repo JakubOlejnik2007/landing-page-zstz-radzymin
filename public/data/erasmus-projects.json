@@ -440,8 +440,8 @@
           "name": "Malta",
           "country": "Malta",
           "coordinates": [
-            14.5141,
-            35.8992
+            14.4941,
+            35.9184
           ],
           "description": "20 informatyków",
           "color": "#AA5EEE",
@@ -613,7 +613,7 @@
       "participants": "22 nauczycieli – kursy",
       "locations": [
         {
-          "name": "St Julian’s",
+          "name": "Malta",
           "country": "Malta",
           "coordinates": [
             14.4941,
@@ -748,7 +748,7 @@
       "participants": "10 nauczycieli – kursy",
       "locations": [
         {
-          "name": "St Julian’s",
+          "name": "Malta",
           "country": "Malta",
           "coordinates": [
             14.4941,

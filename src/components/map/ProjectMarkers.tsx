@@ -1,7 +1,15 @@
 import { Html } from "@react-three/drei";
-import { memo } from "react";
-import { HOME_MARKER, COLORS, SHADOW_ALPHA_MAP, SHADOW_GEOMETRY, SHADOW_Y, SPHERE_GEOMETRY, STEM_GEOMETRY, } from "./MapConsts";
-import type { ProjectMapMarker, MapMarker } from "../../types/map";
+import { memo, useMemo } from "react";
+import {
+    HOME_MARKER,
+    COLORS,
+    SHADOW_ALPHA_MAP,
+    SHADOW_GEOMETRY,
+    SHADOW_Y,
+    SPHERE_GEOMETRY,
+    STEM_GEOMETRY,
+} from "./MapConsts";
+import type { MapMarker, CityMarker, ProjectMapMarker } from "../../types/map";
 import { getMarkerPosition } from "./GeometryHelpers";
 
 const ProjectMarkers = memo(function ProjectMarkers({
@@ -11,7 +19,31 @@ const ProjectMarkers = memo(function ProjectMarkers({
     markers: ProjectMapMarker[];
     onSelect: (marker: MapMarker) => void;
 }) {
-    const displayMarkers: MapMarker[] = [HOME_MARKER, ...markers];
+    const cityMarkers = useMemo(() => {
+        const cities = new Map<string, CityMarker>();
+
+        markers.forEach(marker => {
+            const key = `${marker.name.trim().toLowerCase()}-${marker.country.trim().toLowerCase()}`;
+
+            const existing = cities.get(key);
+
+            if (existing) {
+                if (!existing.projects.some(project => project.id === marker.project.id)) {
+                    existing.projects.push(marker.project);
+                }
+                return;
+            }
+
+            cities.set(key, {
+                ...marker,
+                projects: [marker.project],
+            });
+        });
+
+        return Array.from(cities.values());
+    }, [markers]);
+
+    const displayMarkers: MapMarker[] = [HOME_MARKER, ...cityMarkers];
 
     return (
         <group>
@@ -22,8 +54,10 @@ const ProjectMarkers = memo(function ProjectMarkers({
                 );
 
                 return (
-                    <group key={marker.project ? `${marker.project.id}-${marker.name}` : "school"} position={position}>
-                        {/* cień pod pinem */}
+                    <group
+                        key={`${marker.name}-${marker.country}`}
+                        position={position}
+                    >
                         <mesh
                             geometry={SHADOW_GEOMETRY}
                             dispose={null}
@@ -44,7 +78,6 @@ const ProjectMarkers = memo(function ProjectMarkers({
                             dispose={null}
                             onClick={() => onSelect(marker)}
                         >
-                            {/* Lambert = matowa, cieniowana kulka (bez białego połysku); emissive utrzymuje kolor w cieniu */}
                             <meshLambertMaterial
                                 color={marker.color}
                                 emissive={marker.color}
@@ -89,6 +122,9 @@ const ProjectMarkers = memo(function ProjectMarkers({
                                 }}
                             >
                                 {marker.name}
+                                {marker.projects && marker.projects.length > 1
+                                    ? ` (${marker.projects.length})`
+                                    : ""}
                             </div>
                         </Html>
                     </group>
@@ -98,4 +134,4 @@ const ProjectMarkers = memo(function ProjectMarkers({
     );
 });
 
-export default ProjectMarkers
+export default ProjectMarkers;
