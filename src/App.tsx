@@ -4,7 +4,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 
-import EuropeMap3D from './components/Map'
+import EuropeMap3D from './components/map/Map'
 
 function App() {
   const [count, setCount] = useState(0)

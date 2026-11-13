@@ -1,0 +1,1027 @@
+{
+  "version": 1,
+  "description": "Projekty mobilności i współpracy międzynarodowej szkoły. Kolory lokalizacji w ramach projektu można rozjaśniać/ściemniać na etapie prezentacji mapy.",
+  "projects": [
+    {
+      "id": "2006-ldv",
+      "year": 2006,
+      "program": "Leonardo da Vinci",
+      "title": "Praktyka zawodowa uczniów w zakresie urządzania i pielęgnacji terenów zieleni",
+      "number": "MO6/169/k/A/420",
+      "amount": null,
+      "currency": null,
+      "audience": "students",
+      "participants": "20 uczestników (+4 opiekunów, zmieniali się po 2 tygodniach)",
+      "locations": [
+        {
+          "name": "Nienburg",
+          "country": "Niemcy",
+          "coordinates": [
+            9.2109,
+            52.6461
+          ],
+          "description": "Architektura krajobrazu, Deula Nienburg",
+          "color": "#D97706",
+          "primary": false
+        }
+      ],
+      "hue": "#D97706",
+      "article": [
+        {
+          "language": "pl",
+          "content": "20 uczestników (+4 opiekunów, zmieniali się po 2 tygodniach)"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2012-ldv",
+      "year": 2012,
+      "program": "Leonardo da Vinci",
+      "title": "Praktyki zawodowe uczniów Zespołu Szkół Terenów Zieleni na rynkach pracy w Unii Europejskiej",
+      "number": "2012-1-PL1-ESF01-27797",
+      "amount": 485301.08,
+      "currency": "PLN",
+      "audience": "students",
+      "participants": "52 uczestników + 6 opiekunów",
+      "locations": [
+        {
+          "name": "Londyn",
+          "country": "Wielka Brytania",
+          "coordinates": [
+            -0.1276,
+            51.5072
+          ],
+          "description": "16 kelnerów",
+          "color": "#5384EF",
+          "primary": false
+        },
+        {
+          "name": "Schkeuditz",
+          "country": "Niemcy",
+          "coordinates": [
+            12.2244,
+            51.3967
+          ],
+          "description": "20 osób – gastronomia",
+          "color": "#2563EB",
+          "primary": false
+        },
+        {
+          "name": "Nienburg",
+          "country": "Niemcy",
+          "coordinates": [
+            9.2109,
+            52.6461
+          ],
+          "description": "16 architektów krajobrazu, Deula Nienburg",
+          "color": "#1D4EBA",
+          "primary": false
+        }
+      ],
+      "hue": "#2563EB",
+      "article": [
+        {
+          "language": "pl",
+          "content": "52 uczestników + 6 opiekunów"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2013-ldv",
+      "year": 2013,
+      "program": "Leonardo da Vinci",
+      "title": "Praktyki zawodowe w Unii Europejskiej pierwszym krokiem do sukcesu na rynku pracy",
+      "number": "2013-1-PL1",
+      "amount": 618105,
+      "currency": "PLN",
+      "audience": "students",
+      "participants": "64 uczestników + 8 opiekunów",
+      "locations": [
+        {
+          "name": "Londyn",
+          "country": "Wielka Brytania",
+          "coordinates": [
+            -0.1276,
+            51.5072
+          ],
+          "description": "16 kelnerów, 16 osób – gastronomia i 16 informatyków",
+          "color": "#40AAA1",
+          "primary": false
+        },
+        {
+          "name": "Rzym",
+          "country": "Włochy",
+          "coordinates": [
+            12.4964,
+            41.9028
+          ],
+          "description": "16 osób – architektura krajobrazu",
+          "color": "#0A756B",
+          "primary": false
+        }
+      ],
+      "hue": "#0D9488",
+      "article": [
+        {
+          "language": "pl",
+          "content": "64 uczestników + 8 opiekunów"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2014-erasmus",
+      "year": 2014,
+      "program": "Erasmus+ / POWER",
+      "title": "Praktyki zawodowe w krajach Unii Europejskiej kluczem do sukcesu zawodowego",
+      "number": "POWERVET-2014-1-PL01-KA102-001080",
+      "amount": 555295.3,
+      "currency": "PLN",
+      "audience": "students",
+      "participants": "68 uczestników + 8 opiekunów",
+      "locations": [
+        {
+          "name": "Londyn",
+          "country": "Wielka Brytania",
+          "coordinates": [
+            -0.1276,
+            51.5072
+          ],
+          "description": "16 kelnerów, 16 osób – gastronomia i 20 informatyków",
+          "color": "#9863F1",
+          "primary": false
+        },
+        {
+          "name": "Rzym",
+          "country": "Włochy",
+          "coordinates": [
+            12.4964,
+            41.9028
+          ],
+          "description": "16 architektów krajobrazu",
+          "color": "#622EBB",
+          "primary": false
+        }
+      ],
+      "hue": "#7C3AED",
+      "article": [
+        {
+          "language": "pl",
+          "content": "68 uczestników + 8 opiekunów"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2015-power",
+      "year": 2015,
+      "program": "POWER",
+      "title": "Mobilność zawodowa uczniów i nauczycieli ZSTZ Radzymin",
+      "number": "POWERVET-2015-1-PL01-KA102-015004",
+      "amount": 273293.44,
+      "currency": "PLN",
+      "audience": "students",
+      "participants": "37 uczestników + 2 opiekunów: 20 uczniów gastronomii i 17 nauczycieli",
+      "locations": [],
+      "hue": "#DB2777",
+      "article": [
+        {
+          "language": "pl",
+          "content": "37 uczestników + 2 opiekunów: 20 uczniów gastronomii i 17 nauczycieli"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2016-power",
+      "year": 2016,
+      "program": "POWER",
+      "title": "Staże zawodowe uczniów ZSTZ Radzymin w krajach Unii Europejskiej",
+      "number": "POWERVET-2016-1-PL01-KA102-024203",
+      "amount": 383694.53,
+      "currency": "PLN",
+      "audience": "students",
+      "participants": "46 uczestników + 5 opiekunów",
+      "locations": [
+        {
+          "name": "Turyn",
+          "country": "Włochy",
+          "coordinates": [
+            7.6869,
+            45.0703
+          ],
+          "description": "20 uczniów – gastronomia/kelner",
+          "color": "#3CA8C2",
+          "primary": false
+        },
+        {
+          "name": "Londyn",
+          "country": "Wielka Brytania",
+          "coordinates": [
+            -0.1276,
+            51.5072
+          ],
+          "description": "16 informatyków",
+          "color": "#0891B2",
+          "primary": false
+        },
+        {
+          "name": "Youghal",
+          "country": "Irlandia",
+          "coordinates": [
+            -7.8506,
+            51.9522
+          ],
+          "description": "10 architektów krajobrazu",
+          "color": "#06738D",
+          "primary": false
+        }
+      ],
+      "hue": "#0891B2",
+      "article": [
+        {
+          "language": "pl",
+          "content": "46 uczestników + 5 opiekunów"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2017-power-vet",
+      "year": 2017,
+      "program": "POWER",
+      "title": "Praktyki zawodowe uczniów ZSTZ Radzymin w krajach Unii Europejskiej",
+      "number": "POWERVET-2017-1-PL01-KA102-PLN-036321",
+      "amount": 449564.15,
+      "currency": "PLN",
+      "audience": "students",
+      "participants": "52 uczestników + 6 opiekunów",
+      "locations": [
+        {
+          "name": "Londyn",
+          "country": "Wielka Brytania",
+          "coordinates": [
+            -0.1276,
+            51.5072
+          ],
+          "description": "20 informatyków",
+          "color": "#D5A339",
+          "primary": false
+        },
+        {
+          "name": "Turyn",
+          "country": "Włochy",
+          "coordinates": [
+            7.6869,
+            45.0703
+          ],
+          "description": "16 osób – gastronomia",
+          "color": "#CA8A04",
+          "primary": false
+        },
+        {
+          "name": "Rzym",
+          "country": "Włochy",
+          "coordinates": [
+            12.4964,
+            41.9028
+          ],
+          "description": "16 osób – architektura",
+          "color": "#A06D03",
+          "primary": false
+        }
+      ],
+      "hue": "#CA8A04",
+      "article": [
+        {
+          "language": "pl",
+          "content": "52 uczestników + 6 opiekunów"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2017-power-se",
+      "year": 2017,
+      "program": "POWER",
+      "title": "Mobilność nauczycieli ZSTZ Radzymin w Europie",
+      "number": "POWERSE-2017-1-PL01-KA101-037359",
+      "amount": 75794.4,
+      "currency": "PLN",
+      "audience": "teachers",
+      "participants": "8 uczestników – nauczycieli",
+      "locations": [],
+      "hue": "#64748B",
+      "article": [
+        {
+          "language": "pl",
+          "content": "8 uczestników – nauczycieli"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2018-vet",
+      "year": 2018,
+      "program": "Erasmus+",
+      "title": "Uczniowie ZSTZ Radzymin na stażach zawodowych w Europie",
+      "number": "2018-1-PL01-KA102-047940",
+      "amount": 98858,
+      "currency": "EUR",
+      "audience": "students",
+      "participants": "52 uczestników + 6 opiekunów",
+      "locations": [
+        {
+          "name": "Dublin",
+          "country": "Irlandia",
+          "coordinates": [
+            -6.2603,
+            53.3498
+          ],
+          "description": "16 informatyków",
+          "color": "#47B670",
+          "primary": false
+        },
+        {
+          "name": "Rzym",
+          "country": "Włochy",
+          "coordinates": [
+            12.4964,
+            41.9028
+          ],
+          "description": "16 osób – gastronomia oraz 20 kelnerów/architektów",
+          "color": "#11813A",
+          "primary": false
+        }
+      ],
+      "hue": "#16A34A",
+      "article": [
+        {
+          "language": "pl",
+          "content": "52 uczestników + 6 opiekunów"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2018-sch",
+      "year": 2018,
+      "program": "Erasmus+ / POWER",
+      "title": "Szkolenia nauczycieli ZSTZ Radzymin w krajach Unii Europejskiej",
+      "number": "POWERSE-2018-1-PL01-KA101-048624",
+      "amount": 98818.38,
+      "currency": "PLN",
+      "audience": "teachers",
+      "participants": "10 uczestników – nauczycieli",
+      "locations": [],
+      "hue": "#475569",
+      "article": [
+        {
+          "language": "pl",
+          "content": "10 uczestników – nauczycieli"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2020-vet",
+      "year": 2020,
+      "program": "Erasmus+",
+      "title": "Doskonalimy umiejętności zawodowe w Europie",
+      "number": "2020-1-PL01-KA102-079917",
+      "amount": 107709,
+      "currency": "EUR",
+      "audience": "students",
+      "participants": "57 uczestników + 6 opiekunów",
+      "locations": [
+        {
+          "name": "Malta",
+          "country": "Malta",
+          "coordinates": [
+            14.5141,
+            35.8992
+          ],
+          "description": "20 informatyków",
+          "color": "#AA5EEE",
+          "primary": false
+        },
+        {
+          "name": "Rzym",
+          "country": "Włochy",
+          "coordinates": [
+            12.4964,
+            41.9028
+          ],
+          "description": "16 osób – gastronomia",
+          "color": "#9333EA",
+          "primary": false
+        },
+        {
+          "name": "Caprarola",
+          "country": "Włochy",
+          "coordinates": [
+            12.2375,
+            42.3265
+          ],
+          "description": "21 osób – architektura",
+          "color": "#7428B9",
+          "primary": false
+        }
+      ],
+      "hue": "#9333EA",
+      "article": [
+        {
+          "language": "pl",
+          "content": "57 uczestników + 6 opiekunów"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2022-sch",
+      "year": 2022,
+      "program": "Erasmus+ – Akredytacja SCH",
+      "title": "Doskonalimy swój warsztat pracy w Europie",
+      "number": "2022-2-PL01-KA122-SCH-000098459",
+      "amount": 33115,
+      "currency": "EUR",
+      "audience": "teachers",
+      "participants": "19 mobilności – nauczycieli",
+      "locations": [],
+      "hue": "#64748B",
+      "article": [
+        {
+          "language": "pl",
+          "content": "19 mobilności – nauczycieli"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2023-vet",
+      "year": 2023,
+      "program": "Erasmus+ / FERS",
+      "title": "Zdobywamy kompetencje zawodowe w Europie",
+      "number": "2023-1-PL01-KA122-VET-000142562",
+      "amount": 351404.53,
+      "currency": "PLN",
+      "audience": "students",
+      "participants": "30 uczestników + 6 opiekunów",
+      "locations": [
+        {
+          "name": "Rzym",
+          "country": "Włochy",
+          "coordinates": [
+            12.4964,
+            41.9028
+          ],
+          "description": "10 osób – gastronomia/kelnerzy",
+          "color": "#EE7B3F",
+          "primary": false
+        },
+        {
+          "name": "Malta",
+          "country": "Malta",
+          "coordinates": [
+            14.5141,
+            35.8992
+          ],
+          "description": "10 osób – architektura krajobrazu i 10 informatyków",
+          "color": "#B94609",
+          "primary": false
+        }
+      ],
+      "hue": "#EA580C",
+      "article": [
+        {
+          "language": "pl",
+          "content": "30 uczestników + 6 opiekunów"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2024-vet",
+      "year": 2024,
+      "program": "Erasmus+ / FERS",
+      "title": "Kształcimy zawodowo w krajach Unii Europejskiej",
+      "number": "2024-1-PL01-KA122-VET-000226136",
+      "amount": 311754.46,
+      "currency": "PLN",
+      "audience": "students",
+      "participants": "28 uczestników + 4 opiekunów",
+      "locations": [
+        {
+          "name": "Rzym",
+          "country": "Włochy",
+          "coordinates": [
+            12.4964,
+            41.9028
+          ],
+          "description": "12 osób – gastronomia/architektura",
+          "color": "#41938C",
+          "primary": false
+        },
+        {
+          "name": "Malta",
+          "country": "Malta",
+          "coordinates": [
+            14.5141,
+            35.8992
+          ],
+          "description": "16 informatyków",
+          "color": "#0C5D57",
+          "primary": false
+        }
+      ],
+      "hue": "#0F766E",
+      "article": [
+        {
+          "language": "pl",
+          "content": "28 uczestników + 4 opiekunów"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2024-sch-r1",
+      "year": 2024,
+      "program": "Erasmus+ – Akredytacja SCH",
+      "title": "Akredytacja Erasmus+ Edukacja szkolna – runda 1",
+      "number": "2024-1-PL01-KA121-SCH-000224846",
+      "amount": 43875,
+      "currency": "EUR",
+      "audience": "teachers",
+      "participants": "22 nauczycieli – kursy",
+      "locations": [
+        {
+          "name": "St Julian’s",
+          "country": "Malta",
+          "coordinates": [
+            14.4941,
+            35.9184
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#6E7988",
+          "primary": false
+        },
+        {
+          "name": "Florencja",
+          "country": "Włochy",
+          "coordinates": [
+            11.2558,
+            43.7696
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#657182",
+          "primary": false
+        },
+        {
+          "name": "Dublin",
+          "country": "Irlandia",
+          "coordinates": [
+            -6.2603,
+            53.3498
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#5C697A",
+          "primary": false
+        },
+        {
+          "name": "Split",
+          "country": "Chorwacja",
+          "coordinates": [
+            16.4402,
+            43.5081
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#546174",
+          "primary": false
+        },
+        {
+          "name": "Trapani",
+          "country": "Włochy",
+          "coordinates": [
+            12.5372,
+            38.0176
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#4B596C",
+          "primary": false
+        },
+        {
+          "name": "Padwa",
+          "country": "Włochy",
+          "coordinates": [
+            11.8768,
+            45.4064
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#455367",
+          "primary": false
+        },
+        {
+          "name": "Walencja",
+          "country": "Hiszpania",
+          "coordinates": [
+            -0.3763,
+            39.4699
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#424F62",
+          "primary": false
+        },
+        {
+          "name": "Rodos",
+          "country": "Grecja",
+          "coordinates": [
+            28.2278,
+            36.4341
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#3F4B5D",
+          "primary": false
+        },
+        {
+          "name": "Lizbona",
+          "country": "Portugalia",
+          "coordinates": [
+            -9.1393,
+            38.7223
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#3B4758",
+          "primary": false
+        },
+        {
+          "name": "Barcelona",
+          "country": "Hiszpania",
+          "coordinates": [
+            2.1686,
+            41.3874
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#384353",
+          "primary": false
+        }
+      ],
+      "hue": "#475569",
+      "article": [
+        {
+          "language": "pl",
+          "content": "22 nauczycieli – kursy"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2025-sch-r2",
+      "year": 2025,
+      "program": "Erasmus+ – Akredytacja SCH",
+      "title": "Akredytacja Erasmus+ Edukacja szkolna – runda 2",
+      "number": "2025-1-PL01-KA121-SCH-000312699",
+      "amount": 20000,
+      "currency": "EUR",
+      "audience": "teachers",
+      "participants": "10 nauczycieli – kursy",
+      "locations": [
+        {
+          "name": "St Julian’s",
+          "country": "Malta",
+          "coordinates": [
+            14.4941,
+            35.9184
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#6E7988",
+          "primary": false
+        },
+        {
+          "name": "Barcelona",
+          "country": "Hiszpania",
+          "coordinates": [
+            2.1686,
+            41.3874
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#5A6779",
+          "primary": false
+        },
+        {
+          "name": "Rzym",
+          "country": "Włochy",
+          "coordinates": [
+            12.4964,
+            41.9028
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#475569",
+          "primary": false
+        },
+        {
+          "name": "Walencja",
+          "country": "Hiszpania",
+          "coordinates": [
+            -0.3763,
+            39.4699
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#404C5E",
+          "primary": false
+        },
+        {
+          "name": "Split",
+          "country": "Chorwacja",
+          "coordinates": [
+            16.4402,
+            43.5081
+          ],
+          "description": "Kursy dla nauczycieli",
+          "color": "#384353",
+          "primary": false
+        }
+      ],
+      "hue": "#475569",
+      "article": [
+        {
+          "language": "pl",
+          "content": "10 nauczycieli – kursy"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2026-sch-r3",
+      "year": 2026,
+      "program": "Erasmus+ – Akredytacja SCH",
+      "title": "Akredytacja Erasmus+ Edukacja szkolna – runda 3",
+      "number": "2026-1-PL01-KA121-SCH-000421484",
+      "amount": 36890,
+      "currency": "EUR",
+      "audience": "students",
+      "participants": "10 uczniów + 2 opiekunów; 9 nauczycieli – kursy; 3 nauczycieli – job shadowing; 1 ekspert",
+      "locations": [
+        {
+          "name": "Larissa",
+          "country": "Grecja",
+          "coordinates": [
+            22.4172,
+            39.639
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#6E7988",
+          "primary": false
+        },
+        {
+          "name": "Malaga",
+          "country": "Hiszpania",
+          "coordinates": [
+            -4.4214,
+            36.7213
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#5A6779",
+          "primary": false
+        },
+        {
+          "name": "Funchal",
+          "country": "Portugalia",
+          "coordinates": [
+            -16.9241,
+            32.6669
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#475569",
+          "primary": false
+        },
+        {
+          "name": "Laptokaria",
+          "country": "Grecja",
+          "coordinates": [
+            22.5011,
+            40.0583
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#404C5E",
+          "primary": false
+        },
+        {
+          "name": "Rzym",
+          "country": "Włochy",
+          "coordinates": [
+            12.4964,
+            41.9028
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#384353",
+          "primary": false
+        }
+      ],
+      "hue": "#475569",
+      "article": [
+        {
+          "language": "pl",
+          "content": "10 uczniów + 2 opiekunów; 9 nauczycieli – kursy; 3 nauczycieli – job shadowing; 1 ekspert"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2025-vet-r1",
+      "year": 2025,
+      "program": "Erasmus+ – Akredytacja VET",
+      "title": "Akredytacja Erasmus+ Kształcenie zawodowe – runda 1",
+      "number": "2025-1-PL01-KA121-VET-000312821",
+      "amount": 92028,
+      "currency": "EUR",
+      "audience": "students",
+      "participants": "38 uczniów + 4 opiekunów; 1 nauczyciel – kurs; 2 nauczycieli – job shadowing; 1 wizyta przygotowawcza",
+      "locations": [
+        {
+          "name": "Malaga",
+          "country": "Hiszpania",
+          "coordinates": [
+            -4.4214,
+            36.7213
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#CC4465",
+          "primary": false
+        },
+        {
+          "name": "Barcelona",
+          "country": "Hiszpania",
+          "coordinates": [
+            2.1686,
+            41.3874
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#960E2F",
+          "primary": false
+        }
+      ],
+      "hue": "#BE123C",
+      "article": [
+        {
+          "language": "pl",
+          "content": "38 uczniów + 4 opiekunów; 1 nauczyciel – kurs; 2 nauczycieli – job shadowing; 1 wizyta przygotowawcza"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    },
+    {
+      "id": "2026-vet-r2",
+      "year": 2026,
+      "program": "Erasmus+ – Akredytacja VET",
+      "title": "Akredytacja Erasmus+ Kształcenie zawodowe – runda 2",
+      "number": "2026-1-PL01-KA121-VET-000421575",
+      "amount": 88910,
+      "currency": "EUR",
+      "audience": "students",
+      "participants": "36 uczniów + 4 opiekunów; 3 nauczycieli – job shadowing; 2 wizyty przygotowawcze",
+      "locations": [
+        {
+          "name": "Malaga",
+          "country": "Hiszpania",
+          "coordinates": [
+            -4.4214,
+            36.7213
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#CC4465",
+          "primary": false
+        },
+        {
+          "name": "Laptokaria",
+          "country": "Grecja",
+          "coordinates": [
+            22.5011,
+            40.0583
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#C52B50",
+          "primary": false
+        },
+        {
+          "name": "Dublin",
+          "country": "Irlandia",
+          "coordinates": [
+            -6.2603,
+            53.3498
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#BE123C",
+          "primary": false
+        },
+        {
+          "name": "Chroustovice",
+          "country": "Czechy",
+          "coordinates": [
+            15.9375,
+            49.9558
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#AA1036",
+          "primary": false
+        },
+        {
+          "name": "Bari",
+          "country": "Włochy",
+          "coordinates": [
+            16.8719,
+            41.1171
+          ],
+          "description": "Mobilność uczniów i kadry",
+          "color": "#960E2F",
+          "primary": false
+        }
+      ],
+      "hue": "#BE123C",
+      "article": [
+        {
+          "language": "pl",
+          "content": "36 uczniów + 4 opiekunów; 3 nauczycieli – job shadowing; 2 wizyty przygotowawcze"
+        },
+        {
+          "language": "en",
+          "content": ""
+        }
+      ],
+      "assets": []
+    }
+  ]
+}
