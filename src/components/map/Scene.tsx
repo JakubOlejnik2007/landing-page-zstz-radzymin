@@ -45,6 +45,7 @@ const Scene = memo(function Scene({
                 enableDamping
                 dampingFactor={0.06}
                 minDistance={CAMERA.minDistance}
+                enableZoom={false}
                 maxDistance={CAMERA.maxDistance}
                 maxPolarAngle={Math.PI / 2.05}
                 minPolarAngle={0.35}
