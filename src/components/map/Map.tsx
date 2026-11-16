@@ -94,7 +94,7 @@ export default function EuropeMap3D() {
                 }}
                 dpr={[1, 1.5]}
                 gl={{ antialias: true, powerPreference: "high-performance" }}
-                style={{ flex: 1, background: "transparent" }}
+                style={{ width: "100%", height: "100%", flex: "1 1 0", background: "transparent" }}
             >
                 <Scene data={data} markers={markers} onSelect={handleSelect} />
             </Canvas>

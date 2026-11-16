@@ -1,5 +1,5 @@
 .page-section {
-  height: 100vh;
+  min-height: calc(100vh - 72px);
   background-color: #636363;
   scroll-snap-align: start;
 
