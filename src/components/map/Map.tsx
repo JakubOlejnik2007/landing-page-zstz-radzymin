@@ -5,6 +5,7 @@ import type { FeatureCollection, MapMarker, ProjectMapMarker } from "../../types
 import type { ErasmusProject } from "../../types/project";
 import Scene from "./Scene";
 import { COLORS, CAMERA } from "./MapConsts";
+import { useTranslation } from "react-i18next";
 
 
 export default function EuropeMap3D() {
@@ -13,6 +14,8 @@ export default function EuropeMap3D() {
     const [projects, setProjects] = useState<ErasmusProject[] | null>(null);
     const [selectedProject, setSelectedProject] = useState<ErasmusProject | null>(null);
     const [error, setError] = useState("");
+
+    const { t } = useTranslation("controls");
 
     useEffect(() => {
         const controller = new AbortController();
@@ -240,7 +243,7 @@ export default function EuropeMap3D() {
                     pointerEvents: "none",
                 }}
             >
-                Przeciągnij, aby obrócić · Scroll, aby przybliżyć
+                {t("mapControls")}
             </div>
         </div>
     );

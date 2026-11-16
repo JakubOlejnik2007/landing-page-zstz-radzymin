@@ -6,7 +6,8 @@
         "common",
         "navigation",
         "home",
-        "projects"
+        "projects",
+        "controls"
     ],
     "languages": [
         {
