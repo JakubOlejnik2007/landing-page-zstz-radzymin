@@ -1,0 +1,41 @@
+{
+    "cities": {
+        "nienburg": "Nienburg",
+        "london": "London",
+        "schkeuditz": "Schkeuditz",
+        "rome": "Rome",
+        "turin": "Turin",
+        "youghal": "Youghal",
+        "dublin": "Dublin",
+        "malta": "Malta",
+        "caprarola": "Caprarola",
+        "florence": "Florence",
+        "split": "Split",
+        "trapani": "Trapani",
+        "padua": "Padua",
+        "valencia": "Valencia",
+        "rhodes": "Rhodes",
+        "lisbon": "Lisbon",
+        "barcelona": "Barcelona",
+        "larissa": "Larissa",
+        "malaga": "Málaga",
+        "funchal": "Funchal",
+        "leptokarya": "Leptokarya",
+        "chroustovice": "Chroustovice",
+        "bari": "Bari",
+        "radzymin": "Radzymin"
+    },
+    "countries": {
+        "de": "Germany",
+        "gb": "United Kingdom",
+        "it": "Italy",
+        "ie": "Ireland",
+        "mt": "Malta",
+        "hr": "Croatia",
+        "es": "Spain",
+        "gr": "Greece",
+        "pt": "Portugal",
+        "cz": "Czechia",
+        "pl": "Poland"
+    }
+}

@@ -16,6 +16,7 @@ export default function EuropeMap3D() {
     const [error, setError] = useState("");
 
     const { t } = useTranslation("controls");
+    const { t: t2 } = useTranslation("geo")
 
     useEffect(() => {
         const controller = new AbortController();
@@ -156,7 +157,7 @@ export default function EuropeMap3D() {
                             </button>
 
                             <h3>{selectedProject.title}</h3>
-                            <p>{selected.name}, {selected.country}</p>
+                            <p>{t2(`cities.${selected.name}`)}, {t2(`countries.${selected.country}`)}</p>
                             <p>{selectedProject.year} · {selectedProject.program}</p>
                             <p>{selectedProject.number}</p>
 
@@ -194,8 +195,8 @@ export default function EuropeMap3D() {
                         </>
                     ) : (
                         <>
-                            <h3>{selected.name}</h3>
-                            <p>{selected.country}</p>
+                            <h3>{t2(`cities.${selected.name}`)}</h3>
+                            <p>{t2(`countries.${selected.country}`)}</p>
 
                             {selected.projects && selected.projects.length > 0 ? (
                                 <>

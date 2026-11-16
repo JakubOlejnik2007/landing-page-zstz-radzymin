@@ -1,5 +1,5 @@
 import { Html } from "@react-three/drei";
-import { memo, useMemo } from "react";
+import { memo, useMemo, useTransition } from "react";
 import {
     HOME_MARKER,
     COLORS,
@@ -11,6 +11,7 @@ import {
 } from "./MapConsts";
 import type { MapMarker, CityMarker, ProjectMapMarker } from "../../types/map";
 import { getMarkerPosition } from "./GeometryHelpers";
+import { useTranslation } from "react-i18next";
 
 const ProjectMarkers = memo(function ProjectMarkers({
     markers,
@@ -19,6 +20,8 @@ const ProjectMarkers = memo(function ProjectMarkers({
     markers: ProjectMapMarker[];
     onSelect: (marker: MapMarker) => void;
 }) {
+
+    const { t } = useTranslation("geo");
     const cityMarkers = useMemo(() => {
         const cities = new Map<string, CityMarker>();
 
@@ -121,7 +124,7 @@ const ProjectMarkers = memo(function ProjectMarkers({
                                     boxShadow: `0 0 12px ${marker.color}40`,
                                 }}
                             >
-                                {marker.name}
+                                {t(`cities.${marker.name}`)}
                                 {marker.projects && marker.projects.length > 1
                                     ? ` (${marker.projects.length})`
                                     : ""}

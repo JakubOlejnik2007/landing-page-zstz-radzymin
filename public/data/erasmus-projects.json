@@ -14,13 +14,13 @@
       "participants": "20 uczestników (+4 opiekunów, zmieniali się po 2 tygodniach)",
       "locations": [
         {
-          "name": "Nienburg",
-          "country": "Niemcy",
+          "name": "nienburg",
+          "country": "de",
           "coordinates": [
             9.2109,
             52.6461
           ],
-          "description": "Architektura krajobrazu, Deula Nienburg",
+          "description": "Architektura krajobrazu, Deula nienburg",
           "color": "#D97706",
           "primary": false
         }
@@ -50,8 +50,8 @@
       "participants": "52 uczestników + 6 opiekunów",
       "locations": [
         {
-          "name": "Londyn",
-          "country": "Wielka Brytania",
+          "name": "london",
+          "country": "gb",
           "coordinates": [
             -0.1276,
             51.5072
@@ -61,8 +61,8 @@
           "primary": false
         },
         {
-          "name": "Schkeuditz",
-          "country": "Niemcy",
+          "name": "schkeuditz",
+          "country": "de",
           "coordinates": [
             12.2244,
             51.3967
@@ -72,13 +72,13 @@
           "primary": false
         },
         {
-          "name": "Nienburg",
-          "country": "Niemcy",
+          "name": "nienburg",
+          "country": "de",
           "coordinates": [
             9.2109,
             52.6461
           ],
-          "description": "16 architektów krajobrazu, Deula Nienburg",
+          "description": "16 architektów krajobrazu, Deula nienburg",
           "color": "#1D4EBA",
           "primary": false
         }
@@ -108,8 +108,8 @@
       "participants": "64 uczestników + 8 opiekunów",
       "locations": [
         {
-          "name": "Londyn",
-          "country": "Wielka Brytania",
+          "name": "london",
+          "country": "gb",
           "coordinates": [
             -0.1276,
             51.5072
@@ -119,8 +119,8 @@
           "primary": false
         },
         {
-          "name": "Rzym",
-          "country": "Włochy",
+          "name": "rome",
+          "country": "it",
           "coordinates": [
             12.4964,
             41.9028
@@ -155,8 +155,8 @@
       "participants": "68 uczestników + 8 opiekunów",
       "locations": [
         {
-          "name": "Londyn",
-          "country": "Wielka Brytania",
+          "name": "london",
+          "country": "gb",
           "coordinates": [
             -0.1276,
             51.5072
@@ -166,8 +166,8 @@
           "primary": false
         },
         {
-          "name": "Rzym",
-          "country": "Włochy",
+          "name": "rome",
+          "country": "it",
           "coordinates": [
             12.4964,
             41.9028
@@ -226,8 +226,8 @@
       "participants": "46 uczestników + 5 opiekunów",
       "locations": [
         {
-          "name": "Turyn",
-          "country": "Włochy",
+          "name": "turin",
+          "country": "it",
           "coordinates": [
             7.6869,
             45.0703
@@ -237,8 +237,8 @@
           "primary": false
         },
         {
-          "name": "Londyn",
-          "country": "Wielka Brytania",
+          "name": "london",
+          "country": "gb",
           "coordinates": [
             -0.1276,
             51.5072
@@ -248,8 +248,8 @@
           "primary": false
         },
         {
-          "name": "Youghal",
-          "country": "Irlandia",
+          "name": "youghal",
+          "country": "ie",
           "coordinates": [
             -7.8506,
             51.9522
@@ -284,8 +284,8 @@
       "participants": "52 uczestników + 6 opiekunów",
       "locations": [
         {
-          "name": "Londyn",
-          "country": "Wielka Brytania",
+          "name": "london",
+          "country": "gb",
           "coordinates": [
             -0.1276,
             51.5072
@@ -295,8 +295,8 @@
           "primary": false
         },
         {
-          "name": "Turyn",
-          "country": "Włochy",
+          "name": "turin",
+          "country": "it",
           "coordinates": [
             7.6869,
             45.0703
@@ -306,8 +306,8 @@
           "primary": false
         },
         {
-          "name": "Rzym",
-          "country": "Włochy",
+          "name": "rome",
+          "country": "it",
           "coordinates": [
             12.4964,
             41.9028
@@ -366,8 +366,8 @@
       "participants": "52 uczestników + 6 opiekunów",
       "locations": [
         {
-          "name": "Dublin",
-          "country": "Irlandia",
+          "name": "dublin",
+          "country": "ie",
           "coordinates": [
             -6.2603,
             53.3498
@@ -377,8 +377,8 @@
           "primary": false
         },
         {
-          "name": "Rzym",
-          "country": "Włochy",
+          "name": "rome",
+          "country": "it",
           "coordinates": [
             12.4964,
             41.9028
@@ -437,8 +437,8 @@
       "participants": "57 uczestników + 6 opiekunów",
       "locations": [
         {
-          "name": "Malta",
-          "country": "Malta",
+          "name": "malta",
+          "country": "mt",
           "coordinates": [
             14.4941,
             35.9184
@@ -448,8 +448,8 @@
           "primary": false
         },
         {
-          "name": "Rzym",
-          "country": "Włochy",
+          "name": "rome",
+          "country": "it",
           "coordinates": [
             12.4964,
             41.9028
@@ -459,8 +459,8 @@
           "primary": false
         },
         {
-          "name": "Caprarola",
-          "country": "Włochy",
+          "name": "caprarola",
+          "country": "it",
           "coordinates": [
             12.2375,
             42.3265
@@ -519,8 +519,8 @@
       "participants": "30 uczestników + 6 opiekunów",
       "locations": [
         {
-          "name": "Rzym",
-          "country": "Włochy",
+          "name": "rome",
+          "country": "it",
           "coordinates": [
             12.4964,
             41.9028
@@ -530,8 +530,8 @@
           "primary": false
         },
         {
-          "name": "Malta",
-          "country": "Malta",
+          "name": "malta",
+          "country": "mt",
           "coordinates": [
             14.5141,
             35.8992
@@ -566,8 +566,8 @@
       "participants": "28 uczestników + 4 opiekunów",
       "locations": [
         {
-          "name": "Rzym",
-          "country": "Włochy",
+          "name": "rome",
+          "country": "it",
           "coordinates": [
             12.4964,
             41.9028
@@ -577,8 +577,8 @@
           "primary": false
         },
         {
-          "name": "Malta",
-          "country": "Malta",
+          "name": "malta",
+          "country": "mt",
           "coordinates": [
             14.5141,
             35.8992
@@ -613,8 +613,8 @@
       "participants": "22 nauczycieli – kursy",
       "locations": [
         {
-          "name": "Malta",
-          "country": "Malta",
+          "name": "malta",
+          "country": "mt",
           "coordinates": [
             14.4941,
             35.9184
@@ -624,8 +624,8 @@
           "primary": false
         },
         {
-          "name": "Florencja",
-          "country": "Włochy",
+          "name": "florence",
+          "country": "it",
           "coordinates": [
             11.2558,
             43.7696
@@ -635,8 +635,8 @@
           "primary": false
         },
         {
-          "name": "Dublin",
-          "country": "Irlandia",
+          "name": "dublin",
+          "country": "ie",
           "coordinates": [
             -6.2603,
             53.3498
@@ -646,8 +646,8 @@
           "primary": false
         },
         {
-          "name": "Split",
-          "country": "Chorwacja",
+          "name": "split",
+          "country": "hr",
           "coordinates": [
             16.4402,
             43.5081
@@ -657,8 +657,8 @@
           "primary": false
         },
         {
-          "name": "Trapani",
-          "country": "Włochy",
+          "name": "trapani",
+          "country": "it",
           "coordinates": [
             12.5372,
             38.0176
@@ -668,8 +668,8 @@
           "primary": false
         },
         {
-          "name": "Padwa",
-          "country": "Włochy",
+          "name": "padua",
+          "country": "it",
           "coordinates": [
             11.8768,
             45.4064
@@ -679,8 +679,8 @@
           "primary": false
         },
         {
-          "name": "Walencja",
-          "country": "Hiszpania",
+          "name": "valencia",
+          "country": "es",
           "coordinates": [
             -0.3763,
             39.4699
@@ -690,8 +690,8 @@
           "primary": false
         },
         {
-          "name": "Rodos",
-          "country": "Grecja",
+          "name": "rhodes",
+          "country": "gr",
           "coordinates": [
             28.2278,
             36.4341
@@ -701,8 +701,8 @@
           "primary": false
         },
         {
-          "name": "Lizbona",
-          "country": "Portugalia",
+          "name": "lisbon",
+          "country": "pt",
           "coordinates": [
             -9.1393,
             38.7223
@@ -712,8 +712,8 @@
           "primary": false
         },
         {
-          "name": "Barcelona",
-          "country": "Hiszpania",
+          "name": "barcelona",
+          "country": "es",
           "coordinates": [
             2.1686,
             41.3874
@@ -748,8 +748,8 @@
       "participants": "10 nauczycieli – kursy",
       "locations": [
         {
-          "name": "Malta",
-          "country": "Malta",
+          "name": "malta",
+          "country": "mt",
           "coordinates": [
             14.4941,
             35.9184
@@ -759,8 +759,8 @@
           "primary": false
         },
         {
-          "name": "Barcelona",
-          "country": "Hiszpania",
+          "name": "barcelona",
+          "country": "es",
           "coordinates": [
             2.1686,
             41.3874
@@ -770,8 +770,8 @@
           "primary": false
         },
         {
-          "name": "Rzym",
-          "country": "Włochy",
+          "name": "rome",
+          "country": "it",
           "coordinates": [
             12.4964,
             41.9028
@@ -781,8 +781,8 @@
           "primary": false
         },
         {
-          "name": "Walencja",
-          "country": "Hiszpania",
+          "name": "valencia",
+          "country": "es",
           "coordinates": [
             -0.3763,
             39.4699
@@ -792,8 +792,8 @@
           "primary": false
         },
         {
-          "name": "Split",
-          "country": "Chorwacja",
+          "name": "split",
+          "country": "hr",
           "coordinates": [
             16.4402,
             43.5081
@@ -828,8 +828,8 @@
       "participants": "10 uczniów + 2 opiekunów; 9 nauczycieli – kursy; 3 nauczycieli – job shadowing; 1 ekspert",
       "locations": [
         {
-          "name": "Larissa",
-          "country": "Grecja",
+          "name": "larissa",
+          "country": "gr",
           "coordinates": [
             22.4172,
             39.639
@@ -839,8 +839,8 @@
           "primary": false
         },
         {
-          "name": "Malaga",
-          "country": "Hiszpania",
+          "name": "malaga",
+          "country": "es",
           "coordinates": [
             -4.4214,
             36.7213
@@ -850,8 +850,8 @@
           "primary": false
         },
         {
-          "name": "Funchal",
-          "country": "Portugalia",
+          "name": "funchal",
+          "country": "pt",
           "coordinates": [
             -16.9241,
             32.6669
@@ -861,8 +861,8 @@
           "primary": false
         },
         {
-          "name": "Laptokaria",
-          "country": "Grecja",
+          "name": "leptokarya",
+          "country": "gr",
           "coordinates": [
             22.5011,
             40.0583
@@ -872,8 +872,8 @@
           "primary": false
         },
         {
-          "name": "Rzym",
-          "country": "Włochy",
+          "name": "rome",
+          "country": "it",
           "coordinates": [
             12.4964,
             41.9028
@@ -908,8 +908,8 @@
       "participants": "38 uczniów + 4 opiekunów; 1 nauczyciel – kurs; 2 nauczycieli – job shadowing; 1 wizyta przygotowawcza",
       "locations": [
         {
-          "name": "Malaga",
-          "country": "Hiszpania",
+          "name": "malaga",
+          "country": "es",
           "coordinates": [
             -4.4214,
             36.7213
@@ -919,8 +919,8 @@
           "primary": false
         },
         {
-          "name": "Barcelona",
-          "country": "Hiszpania",
+          "name": "barcelona",
+          "country": "es",
           "coordinates": [
             2.1686,
             41.3874
@@ -955,8 +955,8 @@
       "participants": "36 uczniów + 4 opiekunów; 3 nauczycieli – job shadowing; 2 wizyty przygotowawcze",
       "locations": [
         {
-          "name": "Malaga",
-          "country": "Hiszpania",
+          "name": "malaga",
+          "country": "es",
           "coordinates": [
             -4.4214,
             36.7213
@@ -966,8 +966,8 @@
           "primary": false
         },
         {
-          "name": "Laptokaria",
-          "country": "Grecja",
+          "name": "leptokarya",
+          "country": "gr",
           "coordinates": [
             22.5011,
             40.0583
@@ -977,8 +977,8 @@
           "primary": false
         },
         {
-          "name": "Dublin",
-          "country": "Irlandia",
+          "name": "dublin",
+          "country": "ie",
           "coordinates": [
             -6.2603,
             53.3498
@@ -988,8 +988,8 @@
           "primary": false
         },
         {
-          "name": "Chroustovice",
-          "country": "Czechy",
+          "name": "chroustovice",
+          "country": "cz",
           "coordinates": [
             15.9375,
             49.9558
@@ -999,8 +999,8 @@
           "primary": false
         },
         {
-          "name": "Bari",
-          "country": "Włochy",
+          "name": "bari",
+          "country": "it",
           "coordinates": [
             16.8719,
             41.1171

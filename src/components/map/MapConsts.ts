@@ -78,8 +78,8 @@ export const ARC_HEIGHT = 6;
 export const ARC_SEGMENTS = 24;
 
 export const HOME_MARKER: Marker = {
-    name: "Radzymin",
-    country: "Polska",
+    name: "radzymin",
+    country: "pl",
     coordinates: [21.184, 52.416],
     description: "Siedziba szkoły",
     color: "#F2B84B",
